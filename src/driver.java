@@ -17,14 +17,9 @@ import javax.swing.JPanel;
 
 public class driver extends JPanel implements KeyListener, MouseMotionListener
 {
-<<<<<<< HEAD
-	private Player player;
 	private int mouseX, mouseY;
-	
-=======
 	public static Player player;
 	private Monster monster;
->>>>>>> fa0c1e2cbc690f6942690a26d64a228dbaf7db0e
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame ("Game thing");
@@ -48,7 +43,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		addKeyListener(this);
 		addMouseMotionListener(this);
 		player = new Player(100,4,0,0);
-		monster = new Monster (100,6,0,0,0);
+		monster = new Monster (100,2,0,0,0);
 	}
 	//update
 	public void tick ()
@@ -63,15 +58,14 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		super.paintComponent(g);
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File("res/blood.png"));
-			player.draw((Graphics2D) g);
+			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(image, 0, 0, null);
+		g.drawImage(image, 0, 0,1080,810, null);
+		player.draw((Graphics2D) g);
 		monster.draw((Graphics2D)g);
-		
 	}
 	@Override
 	public void keyTyped(KeyEvent key) {
