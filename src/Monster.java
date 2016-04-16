@@ -1,5 +1,5 @@
 
-public class Monster 
+public class Monster extends Entity
 {
 	//Monster instance variables
 	private int health;
@@ -10,11 +10,13 @@ public class Monster
 	
 	public Monster (int h,int s,int d, int x, int y)//Creates basic monster object
 	{
+		super(h, s, x, y);
 		health = h;
 		speed = s;
 		damage = d;
 		posx = x;
 		posy = y;
+		
 	}
 	public int getHealth()//returns monster's current health
 	{
@@ -30,12 +32,13 @@ public class Monster
 	}
 	public void update()
 	{
-		/*if(player.getY > monster.getY)
-			posy = posy + speed
+		/*if( > posy)
+			posy = posy + speed;
 		else if (player.getY < monster.getY)
-			posy -= speed
+			posy -= speed;
 		 */
 		
+	
 	}
 	
 }

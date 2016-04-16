@@ -37,7 +37,7 @@ public class driver extends JPanel implements KeyListener
 		setFocusable(true);
 		requestFocus();
 		addKeyListener(this);
-		player = new Player(0,0);
+		player = new Player(100,4,0,0);
 	}
 	//update
 	public void tick ()
