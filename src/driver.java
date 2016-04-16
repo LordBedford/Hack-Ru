@@ -17,16 +17,11 @@ import javax.swing.JPanel;
 
 public class driver extends JPanel implements KeyListener, MouseMotionListener
 {
-<<<<<<< HEAD
-	private Player player;
+
+	public static Player player;
 	private int mouseX, mouseY;
 	private Monster monster;
 
-=======
-	private int mouseX, mouseY;
-	public static Player player;
-	private Monster monster;
->>>>>>> 1291da45758cabfcfdf93893b72fe983f8f94993
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame ("Game thing");
@@ -49,7 +44,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		requestFocus();
 		addKeyListener(this);
 		addMouseMotionListener(this);
-		player = new Player(100,4,0,0);
+		player = new Player(100,4,1080/2, 810/2);
 		monster = new Monster (100,2,0,0,0);
 	}
 	//update
@@ -66,20 +61,17 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
-			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
-			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
-			g.drawString("Angle: " + player.getAngle(), 500, 50);
-			monster.draw((Graphics2D)g);
+	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		g.drawImage(image, 0, 0, null);
-=======
-		g.drawImage(image, 0, 0,1080,810, null);
+//		g.drawImage(image, 0, 0,1080,810, null);
+		g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
+		g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
+		g.drawString("Angle: " + player.getAngle(), 500, 50);
 		player.draw((Graphics2D) g);
 		monster.draw((Graphics2D)g);
->>>>>>> 1291da45758cabfcfdf93893b72fe983f8f94993
+
 	}
 	@Override
 	public void keyTyped(KeyEvent key) {

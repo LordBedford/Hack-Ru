@@ -46,29 +46,12 @@ public class Player extends Entity {
 	
 	public void draw(Graphics2D g){
 		try {
-			image = ImageIO.read(new File("res/Cat.jpg"));
+			image = ImageIO.read(new File("res/wizkidj.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		AffineTransform saveT = g.getTransform();
-		AffineTransform rotate = new AffineTransform();
-		g.setTransform(rotate);
-//		//calculate angle to rotate towards mouse
-		double rotateY = ((double)mouseY) - (pos.getY() + image.getHeight() / 2);
-		double rotateX = ((double)mouseX) - (pos.getX() + image.getWidth() / 2); //difference mouseX and middle of image x
-		mouseAngle = Math.atan(rotateY/rotateX);
-//		//rotate player to face mouse position
-//		
-//		
-//		rotate.translate((image.getWidth() + pos.getX()) / 2, (image.getHeight() + pos.getY()) / 2);
-		rotate.rotate(mouseAngle, pos.getX() + image.getWidth() / 2, pos.getY() + image.getHeight() / 2);
-//		rotate.translate(-image.getWidth()/2, -image.getHeight()/2);
-		
-
-		
-//		g.drawImage(image, rotate, null);
 		g.drawImage(image, pos.getX(), pos.getY(), null);
-		g.setTransform(saveT);
+
 	}
 
 	public void setUp(boolean b) {up = b;}
