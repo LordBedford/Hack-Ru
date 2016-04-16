@@ -5,15 +5,44 @@ import java.awt.Rectangle;
  * All Entities have: 
  * Health, Damage, Speed, X and Y
  */
-public interface Entity {
-
-	int getX();
-	int getY();
-	int getDamage();
-	int getHealth();
-	int getSpeed();
-	Rectangle getBounds();
-	
-	void update();
-	void draw(Graphics2D g);
+public abstract class Entity {
+	private int health;
+	private int speed;
+	private int posx;
+	private int posy;
+	public Entity (int h,int s,int x,int y)
+	{
+		 health = h;
+		 speed = s;
+		 posx = x;
+		 posy = y;
+	}
+	public	int getX()
+	{
+		return posx;
+	}
+	public int getY()
+	{
+		return posy;
+	}
+	public int getHealth()
+	{
+		return health;
+	}
+	public int getSpeed()
+	{
+		return speed;
+	}
+	public 	Rectangle getBounds() {
+		return null;
+	}
+		
+	public void update()
+	{
+		 
+	}
+	public void draw(Graphics2D g)
+	{
+		
+	}
 }
