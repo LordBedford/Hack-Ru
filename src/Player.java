@@ -6,19 +6,20 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Player implements Entity {
+public class Player extends Entity {
 	
 	private Location pos; //position
 	private boolean up, down, left, right;
 	private int speed;
 	private int dx, dy;
 	
-	public Player(int x, int y){
+	public Player(int h, int s, int x, int y)
+	{
+		super(h,s,x,y);
 		pos = new Location(x, y);
-		
 		dx = 0;
 		dy = 0;
-		speed = 4;
+		speed = s;
 	}
 	
 	public void update(){

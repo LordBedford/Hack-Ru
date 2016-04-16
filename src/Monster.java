@@ -32,12 +32,13 @@ public class Monster extends Entity
 	}
 	public void update()
 	{
-		if(Player.getY() > posy)
+		/*if( > posy)
 			posy = posy + speed;
 		else if (player.getY < monster.getY)
 			posy -= speed;
-		 
+		 */
 		
+	
 	}
 	
 }
