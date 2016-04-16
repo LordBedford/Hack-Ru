@@ -39,7 +39,7 @@ public class Player implements Entity {
 	public void draw(Graphics2D g){
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File("res/blood.png"));
+			image = ImageIO.read(new File("res/Cat.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
