@@ -38,19 +38,19 @@ public class Monster extends Entity
 	}
 	public void update()
 	{
-		if(driver.player.getY() > posy)//Changes monsters y to be equal to player
-			posy = posy + speed;
-		else if (driver.player.getY() < posy)
-			posy -= speed;
-		if(driver.player.getX() > posx)
-		{
-			posx += speed;
-			System.out.println("Right");
-		}
-		else if(driver.player.getX() < posx)
-		{
-			posx -= speed;
-		}
+//		if(driver.player.getY() > posy)//Changes monsters y to be equal to player
+//			posy = posy + speed;
+//		else if (driver.player.getY() < posy)
+//			posy -= speed;
+//		if(driver.player.getX() > posx)
+//		{
+//			posx += speed;
+//			System.out.println("Right");
+//		}
+//		else if(driver.player.getX() < posx)
+//		{
+//			posx -= speed;
+//		}
 	}
 	public void draw(Graphics2D g){
 		BufferedImage image = null;
