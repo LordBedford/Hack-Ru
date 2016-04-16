@@ -18,22 +18,14 @@ import javax.swing.JPanel;
 
 public class driver extends JPanel implements KeyListener, MouseMotionListener
 {
-<<<<<<< HEAD
-	private Player player;
-	private int mouseX, mouseY;
-	private Monster monster;
 
-=======
 	private int mouseX, mouseY;
 	public static Player player;
 	private Monster monster;
-<<<<<<< HEAD
 	private ArrayList<Entity> creatures = new ArrayList();
-	private int monsterSpawnRate = 500;//Spawns monsters every x ticks
+	private int monsterSpawnRate = 6;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
-=======
->>>>>>> 1291da45758cabfcfdf93893b72fe983f8f94993
->>>>>>> 956a62b4bf946c1dc8d5ea90aa842e865b8376c5
+
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame ("Game thing");
@@ -65,6 +57,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 	{
 		if(monsterSpawnCounter == monsterSpawnRate)
 		{
+			System.out.println("Spawn");
 			creatures.add(new Monster(100,2,0,0,0));
 			monsterSpawnCounter = 0;
 		}
@@ -90,13 +83,12 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		g.drawImage(image, 0, 0, null);
-=======
+
 		g.drawImage(image, 0, 0,1080,810, null);
-		player.draw((Graphics2D) g);
-		monster.draw((Graphics2D)g);
->>>>>>> 1291da45758cabfcfdf93893b72fe983f8f94993
+		for(int i = 0; i < creatures.size();i++)
+		{
+			creatures.get(i).draw((Graphics2D)g);
+		}
 	}
 	@Override
 	public void keyTyped(KeyEvent key) {
