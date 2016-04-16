@@ -23,7 +23,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 	public static Player player;
 	private Monster monster;
 	private ArrayList<Entity> creatures = new ArrayList();
-	private int monsterSpawnRate = 6;//Spawns monsters every x ticks
+	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 
 	public static void main(String[] args) 
