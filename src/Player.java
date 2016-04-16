@@ -8,16 +8,32 @@ import javax.imageio.ImageIO;
 
 public class Player implements Entity {
 	
-	private int x, y;
+	private Location pos; //position
+	private boolean up, down, left, right;
+	private int speed;
+	private int dx, dy;
 	
-	public Player(int x, int y)
-	{
-		this.x = x;
-		this.y = y;
+	public Player(int x, int y){
+		pos = new Location(x, y);
+		
+		dx = 0;
+		dy = 0;
+		speed = 4;
 	}
 	
 	public void update(){
+		if(up)
+			dy = -speed;
+		if(down)
+			dy = speed;
+		if(left)
+			dx = -speed;
+		if(right)
+			dx = speed;
+		pos.incX(dx);
+		pos.incY(dy);
 		
+		dx = dy = 0;
 	}
 	
 	public void draw(Graphics2D g){
@@ -27,14 +43,18 @@ public class Player implements Entity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(image, x, y, null);
+		g.drawImage(image, pos.getX(), pos.getY(), null);
 	}
 
-	public int getX() {return x;}
-	public int getY() {return y;}
-	public int getDamage() {}
-	public int getHealth() {}
-	public int getSpeed() {}
-	public Rectangle getBounds(){}
+	public void setUp(boolean b) {up = b;}
+	public void setDown(boolean b) {down = b;}
+	public void setLeft(boolean b) {left = b;}
+	public void setRight(boolean b) {right = b;}
+	public int getX() {return pos.getX();}
+	public int getY() {return pos.getY();}
+	public int getDamage() {return 0;}
+	public int getHealth() {return 0;}
+	public int getSpeed() {return speed;}
+	public Rectangle getBounds(){return null;}
 
 }
