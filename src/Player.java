@@ -1,5 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,11 @@ public class Player extends Entity {
 	private boolean up, down, left, right;
 	private int speed;
 	private int dx, dy;
+	private BufferedImage image;
+	private int mana;
+	private int mouseX, mouseY;
+	private double mouseAngle;
+	
 	
 	public Player(int h, int s, int x, int y)
 	{
@@ -23,6 +29,7 @@ public class Player extends Entity {
 	}
 	
 	public void update(){
+		//move player
 		if(up)
 			dy = -speed;
 		if(down)
@@ -38,9 +45,18 @@ public class Player extends Entity {
 	}
 	
 	public void draw(Graphics2D g){
-		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("res/Cat.jpg"));
+			//calculate angle to rotate towards mouse
+			double rotateY = ((double)mouseY) - pos.getY();
+			double rotateX = ((double)mouseX) - (pos.getX() + image.getWidth() / 2); //difference mouseX and middle of image x
+			mouseAngle = Math.atan(rotateY/rotateX);
+			//rotate player to face mouse position
+			AffineTransform saveT = g.getTransform();
+			AffineTransform rotate = new AffineTransform();
+			g.setTransform(rotate);
+			g.rotate(mouseAngle);
+//			g.setTransform(saveT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,11 +67,14 @@ public class Player extends Entity {
 	public void setDown(boolean b) {down = b;}
 	public void setLeft(boolean b) {left = b;}
 	public void setRight(boolean b) {right = b;}
+	public void setMouseX(int x) {mouseX = x;}
+	public void setMouseY(int y) {mouseY = y;}
 	public int getX() {return pos.getX();}
 	public int getY() {return pos.getY();}
 	public int getDamage() {return 0;}
 	public int getHealth() {return 0;}
 	public int getSpeed() {return speed;}
-	public Rectangle getBounds(){return null;}
+	public Rectangle getBounds(){return new Rectangle(pos.getX(), pos.getY(), 
+			pos.getX() + image.getWidth(), pos.getY() + image.getHeight());}
 
 }
