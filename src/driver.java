@@ -39,7 +39,7 @@ public class driver extends JPanel implements KeyListener
 		requestFocus();
 		addKeyListener(this);
 		player = new Player(100,4,0,0);
-		monster = new Monster (100,2,0,0,0);
+		monster = new Monster (100,6,0,0,0);
 	}
 	//update
 	public void tick ()
@@ -61,6 +61,7 @@ public class driver extends JPanel implements KeyListener
 		}
 		g.drawImage(image, 0, 0, null);
 		monster.draw((Graphics2D)g);
+		
 	}
 	@Override
 	public void keyTyped(KeyEvent key) {
