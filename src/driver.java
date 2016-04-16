@@ -3,6 +3,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,9 +15,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class driver extends JPanel implements KeyListener
+public class driver extends JPanel implements KeyListener, MouseMotionListener
 {
 	private Player player;
+	private int mouseX, mouseY;
+	
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame ("Game thing");
@@ -37,6 +41,7 @@ public class driver extends JPanel implements KeyListener
 		setFocusable(true);
 		requestFocus();
 		addKeyListener(this);
+		addMouseMotionListener(this);
 		player = new Player(100,4,0,0);
 	}
 	//update
@@ -53,6 +58,7 @@ public class driver extends JPanel implements KeyListener
 		try {
 			image = ImageIO.read(new File("res/blood.png"));
 			player.draw((Graphics2D) g);
+			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -67,7 +73,6 @@ public class driver extends JPanel implements KeyListener
 		int keyCode = key.getKeyCode();
 		if(keyCode == KeyEvent.VK_W){
 			player.setUp(true);
-			System.out.println("sdfa");
 		}
 		if(keyCode == KeyEvent.VK_S){
 			player.setDown(true);
@@ -94,5 +99,15 @@ public class driver extends JPanel implements KeyListener
 		if(keyCode == KeyEvent.VK_D){
 			player.setRight(false);
 		}
+	}
+	@Override
+	public void mouseDragged(MouseEvent e) {
+	}
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		mouseX = e.getX();
+		mouseY = e.getY();
+		player.setMouseX(e.getX());
+		player.setMouseY(e.getY());
 	}
 }
