@@ -1,5 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class driver extends JPanel
+public class driver extends JPanel implements KeyListener
 {
 	public static void main(String[] args) 
 	{
@@ -19,6 +21,7 @@ public class driver extends JPanel
 		driver panel = new driver();
 		frame.getContentPane().add(panel);
 		frame.pack();
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		Timer timer = new Timer();
@@ -28,12 +31,16 @@ public class driver extends JPanel
 	}
 	public driver ()
 	{
-		this.setPreferredSize(new Dimension(1000,1000));
+		this.setPreferredSize(new Dimension(1080,810));
+		addKeyListener(this);
 	}
+	//update
 	public void tick ()
 	{
 		
 	}
+	
+	//render
 	public void paintComponent (Graphics g)
 	{
 		BufferedImage image = null;
@@ -43,5 +50,20 @@ public class driver extends JPanel
 			e.printStackTrace();
 		}
 		g.drawImage(image, 0, 0, null);
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
