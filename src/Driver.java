@@ -79,7 +79,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 				monsterSpawnCounter = 0;
 			}
 			else
-			monsterSpawnCounter++;
+				monsterSpawnCounter++;
 		for(int i = 0; i < creatures.size();i++)//updates all entities in the array.
 		{
 			creatures.get(i).update();
@@ -101,7 +101,11 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 //						creatures.remove(i);
 //						i--;
 //					}
+					System.out.println("hit");
+					magic.remove(j);
+					j--;
 				}
+				
 			}
 		//delete projectile out of frame
 		}
