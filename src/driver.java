@@ -23,7 +23,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 	public static Player player;
 	private Monster monster;
 	private ArrayList<Entity> creatures = new ArrayList();
-	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
+	private int monsterSpawnRate = 60;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 
 	public static void main(String[] args) 
@@ -58,10 +58,15 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		if(monsterSpawnCounter == monsterSpawnRate)
 		{
 			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
-			int side = (int)Math.random() * 4;
-			int xy =0;
-			System.out.println("Spawn");
-			creatures.add(new Monster(100,2,0,spawnpos,0));
+			int side = (int)(Math.random() * 4);
+			if(side == 0)
+				creatures.add(new Monster(100,2,0,spawnpos,0));
+			else if(side == 1)
+				creatures.add(new Monster(100,2,0,0,spawnpos));
+			else if(side == 2)
+				creatures.add(new Monster(100,2,0,1080,spawnpos));
+			else
+				creatures.add(new Monster(100,2,0,spawnpos,810));
 			monsterSpawnCounter = 0;
 		}
 		else
