@@ -53,12 +53,13 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		requestFocus();
 		addKeyListener(this);
 		addMouseMotionListener(this);
+		
 		creatures = new ArrayList<Monster>();
 		player = new Player(100,4,0,0);
 		creatures.add(monster = new Monster (100,2,0,0,0));
 		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
-	}
+		}
 	//update
 	public void tick ()
 	{
@@ -96,11 +97,11 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			{
 				if(creatures.get(i).getHitBox().contains(magic.get(j).getX(), magic.get(j).getY()))
 				{
-//					if(creatures.get(i).takeDamage(magic.get(j).getDamage()))
-//					{
-//						creatures.remove(i);
-//						i--;
-//					}
+					if(creatures.get(i).takeDamage(magic.get(j).getDamage()))
+					{
+						creatures.remove(i);
+						i--;
+					}
 					System.out.println("hit");
 					magic.remove(j);
 					j--;
@@ -120,16 +121,21 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	//render
 	public void paintComponent (Graphics g)
 	{
+		for(int i = 0; i < 22;i++)
+			for(int j = 0; j < 17 ;j++)
+			{	
+				BufferedImage image = null;
+				try {
+					image = ImageIO.read(new File("res/GroundTile.png"));
+					g.drawImage(image, 0, 0,1080,810, null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		super.paintComponent(g);
-		BufferedImage image = null;
-		try {
-			image = ImageIO.read(new File("res/GroundTile.png"));
-			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
-			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
-			g.drawString("Projectile: " + magic.size(), 500, 50);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
+		g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
+		g.drawString("Projectile: " + magic.size(), 500, 50);
 		
 //		g.drawImage(image, 0, 0,1080,810, null);
 		player.draw((Graphics2D)g);
@@ -142,6 +148,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).draw((Graphics2D)g);
 		}
+		
 	}
 	@Override
 	public void keyTyped(KeyEvent key) {
@@ -165,7 +172,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		if(keyCode == KeyEvent.VK_J){
 			if(player.hasMana())
 			{
-				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY()));
+				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY(),100));
 				player.decMana();
 			}
 		}
