@@ -32,6 +32,10 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 	private final int MONSTERSPAWNCAP = 10;
 	private BufferedImage image = null;
+	private BufferedImage imagegasup = null;
+	private BufferedImage imagegasdown = null;
+	private BufferedImage imagegasright = null;
+	private BufferedImage imagegasleft = null;
 	private boolean gameOver;
 	private HealthBar hBar;
 	private ManaBar mBar;
@@ -68,7 +72,10 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
-			
+			imagegasup = ImageIO.read(new File("res/TopPoisonTile.png"));
+			imagegasdown = ImageIO.read(new File("res/BottomPoisonTile.png"));
+			imagegasright = ImageIO.read(new File("res/RightPoisonTile.png"));
+			imagegasleft = ImageIO.read(new File("res/LeftPoisonTile.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -165,10 +172,19 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	{
 		super.paintComponent(g);
 		if(!gameOver)
-		for(int i = 0; i < 6;i++)
+		for(int i = 0; i < 7;i++)
 			for(int j = 0; j < 5 ;j++)
 			{	
+				
 				g.drawImage(image, i*200, j*200,200,200, null);
+				if(i == 0)
+					g.drawImage(imagegasleft, i*200, j*200,50,200, null);
+				else if(i == 6)
+					g.drawImage(imagegasright, i*150+150, j*200,200,200, null);
+				if(j == 0)
+					g.drawImage(imagegasup, i*200, j*200,200,50, null);
+				else if(j == 4)
+					g.drawImage(imagegasdown, i*150, j*200,400,400, null);
 			}
 		
 
