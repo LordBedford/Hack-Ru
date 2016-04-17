@@ -38,8 +38,8 @@ public class Monster extends Entity
 	}
 	public void update()
 	{
-		int playerposy = driver.player.getY() + 50;
-		int playerposx = driver.player.getX() + 50;
+		int playerposy = driver.player.getY() - 50;
+		int playerposx = driver.player.getX() - 10;
 		if(driver.player.getY() != posy && driver.player.getX() != posx)
 		{
 			double tempspeed = speed/2;
