@@ -117,7 +117,7 @@ public class Monster extends Entity
 	}
 	public Rectangle getBounds()
 	{
-		return new Rectangle((int)posx, (int)posy, 80, 80);
+		return new Rectangle((int)posx, (int)posy, 1, 1);
 	}
 	public boolean takeDamage(double damage)
 	{
