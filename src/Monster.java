@@ -99,6 +99,17 @@ public class Monster extends Entity
 	{
 		return hitBox;
 	}
-	
+	public boolean takeDamage(int damage)
+	{
+		if(health - damage > 0)
+		{
+			health -= damage;
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 }
 	
