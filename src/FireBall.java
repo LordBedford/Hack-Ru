@@ -10,7 +10,7 @@ public class FireBall extends Projectile {
 	
 	public FireBall(int direction, int x, int y)
 	{
-		super(direction, x, y, 0);
+		super(direction, x, y, 50, 0);
 	}
 	public void draw(Graphics2D g)
 	{

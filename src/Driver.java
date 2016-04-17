@@ -25,7 +25,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private final int width = 1080, height = 810;
 	public static Player player;
 	private NormalWeapon normWeapon;
-	private Monster monster;
 	private ArrayList<Monster> creatures;
 	private ArrayList<Projectile> magic;
 	private int monsterSpawnRate = 300;//Spawns monsters every x ticks
@@ -51,7 +50,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		timer.scheduleAtFixedRate(new TimerTask(){public void run(){panel.tick();panel.repaint();
 		}}, 0, 1000/60);//handles tick and repainting the jframe.
 		 
-		
 	}
 	public Driver ()
 	{
@@ -112,9 +110,10 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 						break loop;
 					if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
 					{
-						if(magic.get(i).getDamage() == 1)
-							creatures.get(i).setSpeed(.2);
-						else
+						if(magic.get(i).getEffect() == 1)
+						creatures.get(j).setSpeed(.2);
+						
+						if(creatures.get(j).takeDamage(magic.get(i).getDamage()))
 						{
 							creatures.remove(j);
 							count++;
@@ -153,12 +152,26 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		}
 	}
 	
-	
+	private int secret=0;
 	
 	//render
 	public void paintComponent (Graphics g)
 	{
 		super.paintComponent(g);
+		if(Math.random()<0.001)
+			secret=60;
+		if(secret>0)
+		{
+			BufferedImage segret=null;
+			try {
+				segret=ImageIO.read(new File("res/Shmecko.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			secret--;
+			g.drawImage(segret,10,10,null);
+		}
 		for(int i = 0; i < 7;i++)
 			for(int j = 0; j < 5 ;j++)
 			{	

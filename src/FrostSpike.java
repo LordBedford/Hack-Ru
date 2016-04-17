@@ -10,7 +10,7 @@ public class FrostSpike extends Projectile {
 	
 	public FrostSpike(int direction, int x, int y)
 	{
-		super(direction, x, y, 1);
+		super(direction, x, y, 20, 1);
 	}
 	public void draw(Graphics2D g)
 	{
@@ -21,6 +21,6 @@ public class FrostSpike extends Projectile {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(image, (int)pos.getX(), (int)pos.getY(), null);
+		g.drawImage(image, (int)pos.getX(),(int) pos.getY(), null);
 	}
 }

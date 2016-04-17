@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -9,7 +10,7 @@ import javax.imageio.ImageIO;
 public class Monster extends Entity
 {
 	//Monster instance variables
-	private double health;
+//	private double health;
 	private double speed;
 	private double damage;
 	private double posx;
@@ -17,11 +18,14 @@ public class Monster extends Entity
 	private int width, height;
 	private boolean frozen;
 	private int count; //time frozen
+	private double green; //isHealth
+	private double red;
 	
 	public Monster (int h, double s,int d, int x, int y)//Creates basic monster object
 	{
 		super(h, s, x, y);
-		health = h;
+		green = h;
+		red = h;
 		speed = s;
 		damage = d;
 		posx = x;
@@ -31,7 +35,7 @@ public class Monster extends Entity
 	}
 	public double getHealth()//returns monster's current health
 	{
-		return health;
+		return green;
 	}
 	public double getSpeed()//returns monster's current speed
 	{
@@ -105,16 +109,21 @@ public class Monster extends Entity
 			e.printStackTrace();
 		}
 		g.drawImage(image, (int)posx, (int)posy, null);
+		//health bar
+		g.setColor(Color.RED);
+		g.fillRect((int)posx, (int)posy - 10, (int) red, 10);
+		g.setColor(Color.GREEN);
+		g.fillRect((int)posx, (int)posy - 10, (int) green, 10);
 	}
 	public Rectangle getBounds()
 	{
 		return new Rectangle((int)posx, (int)posy, 80, 80);
 	}
-	public boolean takeDamage(int damage)
+	public boolean takeDamage(double damage)
 	{
-		if(health - damage > 0)
+		if(green - damage > 0)
 		{
-			health -= damage;
+			green -= damage;
 			return false;
 		}
 		else
