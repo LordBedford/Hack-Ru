@@ -64,7 +64,7 @@ public class Monster extends Entity
 //		posx =(int) (distancex / distancetot);
 //		posy = (int)(distancey / distancetot);
 		
-			hitBox.setFrame(posx,posy,100,100);
+			hitBox.setFrame(posx,posy,120,120);
 
 		}
 		else
