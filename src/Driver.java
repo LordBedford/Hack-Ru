@@ -26,23 +26,24 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	public static Player player;
 	private NormalWeapon normWeapon;
 	private Monster monster;
-	private ArrayList<Monster> creatures;
+	public static ArrayList<Monster> creatures;
 	private ArrayList<Projectile> magic;
 	private int monsterSpawnRate = 300;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 	private final int MONSTERSPAWNCAP = 10;
 	private BufferedImage image = null;
-	private BufferedImage imagegasup = null;
-	private BufferedImage imagegasdown = null;
-	private BufferedImage imagegasright = null;
-	private BufferedImage imagegasleft = null;
+	private BufferedImage imagegas = null;
+//	private BufferedImage imagegasup = null;
+//	private BufferedImage imagegasdown = null;
+//	private BufferedImage imagegasright = null;
+//	private BufferedImage imagegasleft = null;
 	private boolean gameOver;
 	private HealthBar hBar;
 	private ManaBar mBar;
 	
 	public static void main(String[] args) 
 	{
-		JFrame frame = new JFrame ("Game thing");
+		JFrame frame = new JFrame ("Cavern Conjurer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Driver panel = new Driver();
 		frame.getContentPane().add(panel);
@@ -63,19 +64,18 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		requestFocus();
 		addKeyListener(this);
 		addMouseMotionListener(this);
-		
+		addMouseListener(this);
+		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		creatures = new ArrayList<Monster>();
 		player = new Player(100,4,width/2,height/2);
-//		creatures.add(monster = new Monster (100,2,0,0,0));
-		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
 		
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
-			imagegasup = ImageIO.read(new File("res/TopPoisonTile.png"));
-			imagegasdown = ImageIO.read(new File("res/BottomPoisonTile.png"));
-			imagegasright = ImageIO.read(new File("res/RightPoisonTile.png"));
-			imagegasleft = ImageIO.read(new File("res/LeftPoisonTile.png"));
+			imagegas = ImageIO.read(new File("res/SolidPoisonTile.png"));
+//			imagegasdown = ImageIO.read(new File("res/BottomPoisonTile.png"));
+//			imagegasright = ImageIO.read(new File("res/RightPoisonTile.png"));
+//			imagegasleft = ImageIO.read(new File("res/LeftPoisonTile.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -89,6 +89,23 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	//update
 	public void tick ()
 	{
+//		if(monsterSpawnCounter == monsterSpawnRate)
+//		{
+//			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
+//			creatures.add(new Monster(100,2,0,spawnpos,0));
+//			int side = (int)(Math.random() * 4);
+//			if(side == 0)
+//				creatures.add(new Monster(100,2,0,spawnpos,0));
+//			else if(side == 1)
+//				creatures.add(new Monster(100,2,0,0,spawnpos));
+//			else if(side == 2)
+//				creatures.add(new Monster(100,2,0,1080,spawnpos));
+//			else
+//				creatures.add(new Monster(100,2,0,spawnpos,810));
+//			monsterSpawnCounter = 0;
+//		}
+//		else
+//			monsterSpawnCounter++;
 		if(!gameOver)
 		{
 			if(creatures.size()<=MONSTERSPAWNCAP)
@@ -116,7 +133,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			{
 				for(int j = 0; j < creatures.size(); j++)
 				{
-					System.out.println(i + " " + j);
 					if(magic.size() == i)
 						break loop;
 					if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
@@ -173,22 +189,20 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		super.paintComponent(g);
 		if(!gameOver)
 		for(int i = 0; i < 7;i++)
+
 			for(int j = 0; j < 5 ;j++)
 			{	
 				
 				g.drawImage(image, i*200, j*200,200,200, null);
 				if(i == 0)
-					g.drawImage(imagegasleft, i*200, j*200,50,200, null);
+					g.drawImage(imagegas, i*200, j*200,50,200, null);
 				else if(i == 6)
-					g.drawImage(imagegasright, i*150+150, j*200,200,200, null);
+					g.drawImage(imagegas, i*150+150, j*200,200,200, null);
 				if(j == 0)
-					g.drawImage(imagegasup, i*200, j*200,200,50, null);
+					g.drawImage(imagegas, i*200, j*200,200,50, null);
 				else if(j == 4)
-					g.drawImage(imagegasdown, i*150, j*200,400,400, null);
+					g.drawImage(imagegas, i*150, j*200,400,400, null);
 			}
-		
-
-
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
@@ -243,7 +257,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		if(keyCode == KeyEvent.VK_J){
 			if(player.hasMana())
 			{
-				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY(),0));
+				magic.add(new FireBall(player.getDirection(), player.getX(), player.getY(),0));
 				player.decMana(1);
 				mBar.setMana(player.getMana());
 			}
@@ -275,12 +289,11 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		player.setMouseX(e.getX());
 		player.setMouseY(e.getY());
 	}
-	@Override
+	
 	public void mouseClicked(MouseEvent e)
 	{
-		
 	}
-	@Override
+	
 	public void mousePressed(MouseEvent e) 
 	{
 		int mouseCode = e.getButton();
@@ -289,20 +302,17 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			normWeapon.attack();
 		}
 	}
-	@Override
+	
 	public void mouseReleased(MouseEvent e)
 	{
-		
 	}
-	@Override
+	
 	public void mouseEntered(MouseEvent e)
 	{
-		
 	}
-	@Override
+	
 	public void mouseExited(MouseEvent e)
 	{
-		
 	}
 	
 }

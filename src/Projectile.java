@@ -6,14 +6,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Projectile {
+public abstract class Projectile {
 	
-	private Location pos;
-	private int speed;
-	private int dx, dy;
-	private BufferedImage image;
-	private int width, height;
-	private int damage;
+	protected Location pos;
+	protected int speed;
+	protected int dx, dy;
+	protected BufferedImage image;
+	protected int width, height;
+	protected int damage;
 	public Projectile(int direction, int x, int y, int damagen)
 	{
 		speed = 10;
@@ -50,17 +50,7 @@ public class Projectile {
 		pos.incY(dy);
 	}
 	
-	public void draw(Graphics2D g)
-	{
-		try {
-			image = ImageIO.read(new File("res/flyingspider.png"));
-			width = image.getHeight();
-			height = image.getHeight();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		g.drawImage(image, pos.getX(), pos.getY(), null);
-	}
+	public abstract void draw(Graphics2D g);
 	
 	public int getX() {return pos.getX();}
 	public int getY() {return pos.getY();}
