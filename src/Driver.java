@@ -50,7 +50,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		timer.scheduleAtFixedRate(new TimerTask(){public void run(){panel.tick();panel.repaint();
 		}}, 0, 1000/60);//handles tick and repainting the jframe.
 		 
-		
 	}
 	public Driver ()
 	{
@@ -159,12 +158,26 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		}
 	}
 	
-	
+	private int secret=0;
 	
 	//render
 	public void paintComponent (Graphics g)
 	{
 		super.paintComponent(g);
+		if(Math.random()<0.001)
+			secret=60;
+		if(secret>0)
+		{
+			BufferedImage segret=null;
+			try {
+				segret=ImageIO.read(new File("res/Shmecko.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			secret--;
+			g.drawImage(segret,10,10,null);
+		}
 		for(int i = 0; i < 6;i++)
 			for(int j = 0; j < 5 ;j++)
 			{	
