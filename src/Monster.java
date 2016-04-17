@@ -40,31 +40,6 @@ public class Monster extends Entity
 	}
 	public void update()
 	{
-<<<<<<< HEAD
-		int playerposy = driver.player.getY() - 50;
-		int playerposx = driver.player.getX() - 10;
-//		if(driver.player.getY() != posy && driver.player.getX() != posx)
-//		{
-//			double tempspeed = speed/2;
-//			if(playerposy > posy)//Changes monsters y to be equal to player
-//				posy = (int)(posy + tempspeed);
-//			else if (playerposy < posy)
-//				posy -= (int)tempspeed;
-//			if(playerposx > posx)
-//			{
-//				posx += (int)tempspeed;
-//				
-//			}
-//			else if(playerposx < posx)
-//			{
-//				posx -= (int)tempspeed;
-//			}
-		double distancex = 0;
-		double distancey = 0;
-		if(playerposx > posx)	
-		
-			hitBox.setFrame(posx,posy,100,100);
-=======
 		int playerposy = Driver.player.getY() - 50;
 		int playerposx = Driver.player.getX() - 10;
 		if(Driver.player.getY() != posy && Driver.player.getX() != posx)
@@ -82,7 +57,15 @@ public class Monster extends Entity
 			else if(playerposx < posx)
 			{
 				posx -= (int)tempspeed;
-			}
+//			}
+//		double distancex = Math.abs(playerposx - posx);
+//		double distancey = Math.abs(playerposy - posy);
+//		double distancetot = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
+//		posx =(int) (distancex / distancetot);
+//		posy = (int)(distancey / distancetot);
+		
+			hitBox.setFrame(posx,posy,100,100);
+
 		}
 		else
 		{
@@ -98,23 +81,9 @@ public class Monster extends Entity
 			{
 				posx -= speed;
 			}
->>>>>>> c7919fdabb85eda4bbcdd295b452aca462022b11
 		}
-//		else
-//		{
-//			if(driver.player.getY() > posy)//Changes monsters y to be equal to player
-//				posy = posy + speed;
-//			else if (driver.player.getY() < posy)
-//				posy -= speed;
-//			if(driver.player.getX() > posx)
-//			{
-//				posx += speed;
-//			}
-//			else if(driver.player.getX() < posx)
-//			{
-//				posx -= speed;
-//			}
-//		}
+		}
+	}
 
 //	}
 	public void draw(Graphics2D g){
