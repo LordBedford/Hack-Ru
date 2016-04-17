@@ -176,7 +176,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	public void paintComponent (Graphics g)
 	{
 		super.paintComponent(g);
-		
+		System.out.println("mana " + player.getMana());
 		if(waveStart)
 		{
 			Font wave = new Font(Font.DIALOG, Font.BOLD, 60);
@@ -218,6 +218,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
 			g.drawString("Projectile Left: " + player.getMana(), 500, 50);
+			System.out.println("mana " + player.getMana());
 			g.drawString("Health: " + player.getHealth(), 500, 60);
 			
 			if(gameOver)
@@ -269,7 +270,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			if(player.hasMana())
 			{
 				magic.add(new FireBall(player.getDirection(), (int)player.getX(), (int)player.getY()));
-//				player.decMana(1);
+				player.decMana(1);
 				mBar.setMana(player.getMana());
 			}
 		}
@@ -277,7 +278,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			if(player.hasMana())
 			{
 				magic.add(new FrostSpike(player.getDirection(),(int) player.getX(), (int)player.getY()));
-//				player.decMana(2);
+				player.decMana(2);
 				mBar.setMana(player.getMana());
 			}
 		}

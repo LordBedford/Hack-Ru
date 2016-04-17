@@ -40,8 +40,8 @@ public class Player extends Entity {
 		direction = new boolean[4];
 		direction[1] = true;
 		dir = 2;
-		mana = 10;
-		manaMax = 10;
+		mana = 10000;
+		manaMax = 10000;
 		health = 100.0;
 //		tick = 0;
 //		stretch = false;
@@ -153,7 +153,7 @@ public class Player extends Entity {
 	public void setMouseX(int x) {mouseX = x;}
 	public void setMouseY(int y) {mouseY = y;}
 	public void setMana(int x) {mana = x;}
-//	public void decMana(int x) {mana-= x;}
+	public void decMana(int x) {mana-= x;}
 	public void decHealth(double x) {health -= x;};
 	public double getX() {return pos.getX();}
 	public double getY() {return pos.getY();}
