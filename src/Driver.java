@@ -161,6 +161,11 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	public void paintComponent (Graphics g)
 	{
 		super.paintComponent(g);
+		for(int i = 0; i < 6;i++)
+			for(int j = 0; j < 5 ;j++)
+			{	
+				g.drawImage(image, i*200, j*200,200,200, null);
+			}
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
