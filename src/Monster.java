@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class Monster extends Entity
 	private int damage;
 	private int posx;
 	private int posy;
+	private Rectangle hitBox;
 	
 	public Monster (int h,int s,int d, int x, int y)//Creates basic monster object
 	{
@@ -22,7 +24,7 @@ public class Monster extends Entity
 		damage = d;
 		posx = x;
 		posy = y;
-		
+		hitBox = new Rectangle(x,y,100,100);
 	}
 	public int getHealth()//returns monster's current health
 	{
@@ -40,40 +42,45 @@ public class Monster extends Entity
 	{
 		int playerposy = driver.player.getY() - 50;
 		int playerposx = driver.player.getX() - 10;
-		if(driver.player.getY() != posy && driver.player.getX() != posx)
-		{
-			double tempspeed = speed/2;
-			if(playerposy > posy)//Changes monsters y to be equal to player
-				posy = (int)(posy + tempspeed);
-			else if (playerposy < posy)
-				posy -= (int)tempspeed;
-			if(playerposx > posx)
-			{
-				posx += (int)tempspeed;
-				
-			}
-			else if(playerposx < posx)
-			{
-				posx -= (int)tempspeed;
-			}
+//		if(driver.player.getY() != posy && driver.player.getX() != posx)
+//		{
+//			double tempspeed = speed/2;
+//			if(playerposy > posy)//Changes monsters y to be equal to player
+//				posy = (int)(posy + tempspeed);
+//			else if (playerposy < posy)
+//				posy -= (int)tempspeed;
+//			if(playerposx > posx)
+//			{
+//				posx += (int)tempspeed;
+//				
+//			}
+//			else if(playerposx < posx)
+//			{
+//				posx -= (int)tempspeed;
+//			}
+		double distancex = 0;
+		double distancey = 0;
+		if(playerposx > posx)	
+		
+			hitBox.setFrame(posx,posy,100,100);
 		}
-		else
-		{
-			if(driver.player.getY() > posy)//Changes monsters y to be equal to player
-				posy = posy + speed;
-			else if (driver.player.getY() < posy)
-				posy -= speed;
-			if(driver.player.getX() > posx)
-			{
-				posx += speed;
-			}
-			else if(driver.player.getX() < posx)
-			{
-				posx -= speed;
-			}
-		}
+//		else
+//		{
+//			if(driver.player.getY() > posy)//Changes monsters y to be equal to player
+//				posy = posy + speed;
+//			else if (driver.player.getY() < posy)
+//				posy -= speed;
+//			if(driver.player.getX() > posx)
+//			{
+//				posx += speed;
+//			}
+//			else if(driver.player.getX() < posx)
+//			{
+//				posx -= speed;
+//			}
+//		}
 
-	}
+//	}
 	public void draw(Graphics2D g){
 		BufferedImage image = null;
 		try {
@@ -83,5 +90,10 @@ public class Monster extends Entity
 		}
 		g.drawImage(image, posx, posy, null);
 	}
+	public Rectangle getHitBox()
+	{
+		return hitBox;
+	}
+	
 }
 	

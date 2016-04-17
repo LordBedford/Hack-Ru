@@ -22,14 +22,9 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 	private int mouseX, mouseY;
 	public static Player player;
 	private Monster monster;
-<<<<<<< HEAD
-	private ArrayList<Entity> creatures = new ArrayList();
-	private int monsterSpawnRate = 60;//Spawns monsters every x ticks
-=======
 	private ArrayList<Entity> creatures;
 	private ArrayList<Projectile> magic;
 	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
->>>>>>> 6ca60ff0c3414af8c00a1248912cfc13832fc564
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 
 	public static void main(String[] args) 
@@ -86,6 +81,14 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		if(player.hasMana() && !magic.isEmpty())
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).update();
+		for(int i = 0;i < creatures.size();i++)
+			//checks to see if projectiles are within monster hitbox
+		{
+			for(int j = 0;j < magic.size();j++)
+			{
+				//if(magic.get(j).)
+			}
+		}
 	}
 	
 	//render
