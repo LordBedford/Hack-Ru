@@ -32,6 +32,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 	private final int MONSTERSPAWNCAP = 10;
 	private BufferedImage image = null;
+	private BufferedImage imagegas = null;
 	private boolean gameOver;
 	private HealthBar hBar;
 	private ManaBar mBar;
@@ -65,7 +66,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
-			
+			imagegas =ImageIO.read(new File("res/SolidPoisonTile.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -178,10 +179,18 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			secret--;
 			g.drawImage(segret,10,10,null);
 		}
-		for(int i = 0; i < 6;i++)
+		for(int i = 0; i < 7;i++)
 			for(int j = 0; j < 5 ;j++)
 			{	
 				g.drawImage(image, i*200, j*200,200,200, null);
+				if(i == 0)
+					g.drawImage(imagegas, i*200, j*200,50,200, null);
+  				else if(i == 6)
+					g.drawImage(imagegas, i*150+150, j*200,200,200, null);
+  				if(j == 0)
+					g.drawImage(imagegas, i*200, j*200,200,50, null);
+  				else if(j == 4)
+					g.drawImage(imagegas, i*150, j*200,400,400, null);
 			}
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
@@ -189,6 +198,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
 			g.drawString("Projectile Left: " + player.getMana(), 500, 50);
 			g.drawString("Health: " + player.getHealth(), 500, 60);
+			
 			if(gameOver)
 			{
 				Font gameOverFont = new Font(Font.DIALOG, Font.BOLD, 100);
