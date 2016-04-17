@@ -85,7 +85,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		}
 		player.update();
 		//update projectile
-		if(player.hasMana() && !magic.isEmpty())
+		if(!magic.isEmpty())
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).update();
 		for(int i = 0;i < creatures.size();i++)
@@ -128,7 +128,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		{
 			creatures.get(i).draw((Graphics2D)g);
 		}
-		if(player.hasMana() && !magic.isEmpty())
+		if(!magic.isEmpty())
 		{
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).draw((Graphics2D)g);
@@ -154,7 +154,11 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			player.setRight(true);
 		}
 		if(keyCode == KeyEvent.VK_J){
-			magic.add(new Projectile(player.getDirection(), player.getX(), player.getY()));
+			if(player.hasMana())
+			{
+				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY()));
+				player.decMana();
+			}
 		}
 	}
 	@Override

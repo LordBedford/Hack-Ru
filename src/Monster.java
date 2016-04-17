@@ -67,25 +67,24 @@ public class Monster extends Entity
 			hitBox.setFrame(posx,posy,100,100);
 
 		}
-		else
-		{
-			if(Driver.player.getY() > posy)//Changes monsters y to be equal to player
-				posy = posy + speed;
-			else if (Driver.player.getY() < posy)
-				posy -= speed;
-			if(Driver.player.getX() > posx)
+			else
 			{
-				posx += speed;
+				if(Driver.player.getY() > posy)//Changes monsters y to be equal to player
+					posy = posy + speed;
+				else if (Driver.player.getY() < posy)
+					posy -= speed;
+				if(Driver.player.getX() > posx)
+				{
+					posx += speed;
+				}
+				else if(Driver.player.getX() < posx)
+				{
+					posx -= speed;
+				}
 			}
-			else if(Driver.player.getX() < posx)
-			{
-				posx -= speed;
-			}
-		}
 		}
 	}
 
-//	}
 	public void draw(Graphics2D g){
 		BufferedImage image = null;
 		try {

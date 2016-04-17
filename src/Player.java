@@ -141,7 +141,7 @@ public class Player extends Entity {
 			direction[i] = false;
 	}
 
-	public boolean hasMana() {if(mana != 0) return true; else return false;}
+	public boolean hasMana() {if(mana > 0) return true; else return false;}
 	public int getDirection() {return dir;}
 	public void setUp(boolean b) {up = b;}
 	public void setDown(boolean b) {down = b;}
@@ -149,6 +149,7 @@ public class Player extends Entity {
 	public void setRight(boolean b) {right = b;}
 	public void setMouseX(int x) {mouseX = x;}
 	public void setMouseY(int y) {mouseY = y;}
+	public void decMana() {mana--;}
 	public int getX() {return pos.getX();}
 	public int getY() {return pos.getY();}
 	public int getDamage() {return 0;}
