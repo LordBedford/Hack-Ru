@@ -16,7 +16,7 @@ public class Player extends Entity {
 	private BufferedImage image;
 	private int mana;
 	private int mouseX, mouseY;
-	private double mouseAngle;
+	private boolean[] direction;
 	
 	
 	public Player(int h, int s, int x, int y)
@@ -26,18 +26,32 @@ public class Player extends Entity {
 		dx = 0;
 		dy = 0;
 		speed = s;
+		direction = new boolean[4];
+		direction[1] = true;
 	}
 	
 	public void update(){
 		//move player
 		if(up)
+		{
 			dy = -speed;
+			direction[0] = true;
+		}
 		if(down)
+		{
 			dy = speed;
+			direction[1] = true;
+		}
 		if(left)
+		{
 			dx = -speed;
+			direction[2] = true;
+		}
 		if(right)
+		{
 			dx = speed;
+			direction[3] = true;
+		}
 		pos.incX(dx);
 		pos.incY(dy);
 		
@@ -46,29 +60,31 @@ public class Player extends Entity {
 	
 	public void draw(Graphics2D g){
 		try {
-			image = ImageIO.read(new File("res/Cat.jpg"));
+			if(direction[0] && direction[2])
+				image = ImageIO.read(new File("res/wizkidj.jpg"));
+			else if(direction[0] && direction[3])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[1] && direction[2])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[1] && direction[2])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[0])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[1])
+				image = ImageIO.read(new File("res/wizkidj.jpg"));
+			else if(direction[2])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[3])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		AffineTransform saveT = g.getTransform();
-		AffineTransform rotate = new AffineTransform();
-		g.setTransform(rotate);
-//		//calculate angle to rotate towards mouse
-		double rotateY = ((double)mouseY) - (pos.getY() + image.getHeight() / 2);
-		double rotateX = ((double)mouseX) - (pos.getX() + image.getWidth() / 2); //difference mouseX and middle of image x
-		mouseAngle = Math.atan(rotateY/rotateX);
-//		//rotate player to face mouse position
-//		
-//		
-//		rotate.translate((image.getWidth() + pos.getX()) / 2, (image.getHeight() + pos.getY()) / 2);
-		rotate.rotate(mouseAngle, pos.getX() + image.getWidth() / 2, pos.getY() + image.getHeight() / 2);
-//		rotate.translate(-image.getWidth()/2, -image.getHeight()/2);
+		g.drawImage(image, pos.getX(), pos.getY(), null);
+		
+		for(int i = 0; i < direction.length; i++)
+			direction[i] = false;
 		
 
-		
-//		g.drawImage(image, rotate, null);
-		g.drawImage(image, pos.getX(), pos.getY(), null);
-		g.setTransform(saveT);
 	}
 
 	public void setUp(boolean b) {up = b;}
@@ -77,7 +93,6 @@ public class Player extends Entity {
 	public void setRight(boolean b) {right = b;}
 	public void setMouseX(int x) {mouseX = x;}
 	public void setMouseY(int y) {mouseY = y;}
-	public double getAngle() {return Math.toDegrees(mouseAngle);}
 	public int getX() {return pos.getX();}
 	public int getY() {return pos.getY();}
 	public int getDamage() {return 0;}

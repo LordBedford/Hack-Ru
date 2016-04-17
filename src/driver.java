@@ -23,7 +23,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 	public static Player player;
 	private Monster monster;
 	private ArrayList<Entity> creatures = new ArrayList();
-	private int monsterSpawnRate = 60;//Spawns monsters every x ticks
+	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 
 	public static void main(String[] args) 
@@ -57,7 +57,9 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 	{
 		if(monsterSpawnCounter == monsterSpawnRate)
 		{
-			int spawnpos = (int) (Math.random() * 1080);
+			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
+			int side = (int)Math.random() * 4;
+			int xy =0;
 			System.out.println("Spawn");
 			creatures.add(new Monster(100,2,0,spawnpos,0));
 			monsterSpawnCounter = 0;
@@ -79,7 +81,6 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
-			g.drawString("Angle: " + player.getAngle(), 500, 50);
 			monster.draw((Graphics2D)g);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -38,7 +38,6 @@ public class Monster extends Entity
 	}
 	public void update()
 	{
-
 		int playerposy = driver.player.getY() + 50;
 		int playerposx = driver.player.getX() + 50;
 		if(driver.player.getY() != posy && driver.player.getX() != posx)
@@ -73,6 +72,7 @@ public class Monster extends Entity
 				posx -= speed;
 			}
 		}
+
 	}
 	public void draw(Graphics2D g){
 		BufferedImage image = null;
