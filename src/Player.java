@@ -61,21 +61,21 @@ public class Player extends Entity {
 	public void draw(Graphics2D g){
 		try {
 			if(direction[0] && direction[2])
-				image = ImageIO.read(new File("res/wizkidj.jpg"));
+				image = ImageIO.read(new File("res/wizkidj.png"));
 			else if(direction[0] && direction[3])
-				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+				image = ImageIO.read(new File("res/whizkidjback.png"));
 			else if(direction[1] && direction[2])
-				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+				image = ImageIO.read(new File("res/whizkidjback.png"));
 			else if(direction[1] && direction[2])
-				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+				image = ImageIO.read(new File("res/whizkidjback.png"));
 			else if(direction[0])
-				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+				image = ImageIO.read(new File("res/whizkidjback.png"));
 			else if(direction[1])
-				image = ImageIO.read(new File("res/wizkidj.jpg"));
+				image = ImageIO.read(new File("res/wizkidj.png"));
 			else if(direction[2])
-				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+				image = ImageIO.read(new File("res/whizkidsideleft.png"));
 			else if(direction[3])
-				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+				image = ImageIO.read(new File("res/whizkidsideright.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
