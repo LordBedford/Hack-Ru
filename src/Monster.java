@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class Monster extends Entity
 	private int damage;
 	private int posx;
 	private int posy;
+	private Rectangle hitBox;
 	
 	public Monster (int h,int s,int d, int x, int y)//Creates basic monster object
 	{
@@ -22,7 +24,7 @@ public class Monster extends Entity
 		damage = d;
 		posx = x;
 		posy = y;
-		
+		hitBox = new Rectangle(x,y,100,100);
 	}
 	public int getHealth()//returns monster's current health
 	{
@@ -55,7 +57,15 @@ public class Monster extends Entity
 			else if(playerposx < posx)
 			{
 				posx -= (int)tempspeed;
-			}
+//			}
+//		double distancex = Math.abs(playerposx - posx);
+//		double distancey = Math.abs(playerposy - posy);
+//		double distancetot = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
+//		posx =(int) (distancex / distancetot);
+//		posy = (int)(distancey / distancetot);
+		
+			hitBox.setFrame(posx,posy,100,100);
+
 		}
 		else
 		{
@@ -72,8 +82,10 @@ public class Monster extends Entity
 				posx -= speed;
 			}
 		}
-
+		}
 	}
+
+//	}
 	public void draw(Graphics2D g){
 		BufferedImage image = null;
 		try {
@@ -82,6 +94,22 @@ public class Monster extends Entity
 			e.printStackTrace();
 		}
 		g.drawImage(image, posx, posy, null);
+	}
+	public Rectangle getHitBox()
+	{
+		return hitBox;
+	}
+	public boolean takeDamage(int damage)
+	{
+		if(health - damage > 0)
+		{
+			health -= damage;
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }
 	

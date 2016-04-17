@@ -25,7 +25,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	public static Player player;
 	private NormalWeapon normWeapon;
 	private Monster monster;
-	private ArrayList<Entity> creatures;
+	private ArrayList<Monster> creatures;
 	private ArrayList<Projectile> magic;
 	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
@@ -53,8 +53,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		requestFocus();
 		addKeyListener(this);
 		addMouseMotionListener(this);
-		creatures = new ArrayList<Entity>();
-		creatures.add(player = new Player(100,4,0,0));
+		creatures = new ArrayList<Monster>();
+		player = new Player(100,4,0,0);
 		creatures.add(monster = new Monster (100,2,0,0,0));
 		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
@@ -83,20 +83,31 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		{
 			creatures.get(i).update();
 		}
-		
+		player.update();
 		//update projectile
 		if(player.hasMana() && !magic.isEmpty())
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).update();
+		for(int i = 0;i < creatures.size();i++)
+			//checks to see if projectiles are within monster hitbox
+		{
+			for(int j = 0;j < magic.size();j++)
+			{
+				if(creatures.get(i).getHitBox().contains(magic.get(j).getX(), magic.get(j).getY()))
+				{
+					
+				}
+			}
 		//delete projectile out of frame
+		}
 		for(int i = 0; i < magic.size(); i++)
 		{
 			if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
 					|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
 					magic.remove(i);
 		}
-	}
 	
+	}
 	//render
 	public void paintComponent (Graphics g)
 	{
