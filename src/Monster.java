@@ -122,5 +122,15 @@ public class Monster extends Entity
 			return true;
 		}
 	}
+	
+	public int getWidth()
+	{
+		return width;
+	}
+	
+	public int getHeight()
+	{
+		return height;
+	}
 }
 	
