@@ -27,9 +27,9 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private Monster monster;
 	private ArrayList<Monster> creatures;
 	private ArrayList<Projectile> magic;
-	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
+	private int monsterSpawnRate = 300;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
-
+	private final int MONSTERSPAWNCAP = 10;
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame ("Game thing");
@@ -62,22 +62,23 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	//update
 	public void tick ()
 	{
-		if(monsterSpawnCounter == monsterSpawnRate)
-		{
-			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
-			creatures.add(new Monster(100,2,0,spawnpos,0));
-			int side = (int)(Math.random() * 4);
-			if(side == 0)
+		if(creatures.size()<=MONSTERSPAWNCAP)
+			if(monsterSpawnCounter == monsterSpawnRate)
+			{
+				int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
 				creatures.add(new Monster(100,2,0,spawnpos,0));
-			else if(side == 1)
+				int side = (int)(Math.random() * 4);
+				if(side == 0)
+				creatures.add(new Monster(100,2,0,spawnpos,0));
+				else if(side == 1)
 				creatures.add(new Monster(100,2,0,0,spawnpos));
-			else if(side == 2)
-				creatures.add(new Monster(100,2,0,1080,spawnpos));
+				else if(side == 2)
+					creatures.add(new Monster(100,2,0,1080,spawnpos));
+				else
+					creatures.add(new Monster(100,2,0,spawnpos,810));
+				monsterSpawnCounter = 0;
+			}
 			else
-				creatures.add(new Monster(100,2,0,spawnpos,810));
-			monsterSpawnCounter = 0;
-		}
-		else
 			monsterSpawnCounter++;
 		for(int i = 0; i < creatures.size();i++)//updates all entities in the array.
 		{
@@ -95,7 +96,11 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			{
 				if(creatures.get(i).getHitBox().contains(magic.get(j).getX(), magic.get(j).getY()))
 				{
-					
+//					if(creatures.get(i).takeDamage(magic.get(j).getDamage()))
+//					{
+//						creatures.remove(i);
+//						i--;
+//					}
 				}
 			}
 		//delete projectile out of frame
