@@ -73,22 +73,22 @@ public class Player extends Entity {
 		try {
 			if(direction[0] && direction[2]) //up left
 			{
-				image = ImageIO.read(new File("res/wizkidj.png"));
+				image = ImageIO.read(new File("res/wizkidupleft.png"));
 				dir = 4;
 			}
 			else if(direction[0] && direction[3]) //up right
 			{
-				image = ImageIO.read(new File("res/whizkidjback.png"));
+				image = ImageIO.read(new File("res/wizkidupright.png"));
 				dir = 5;
 			}
 			else if(direction[1] && direction[2]) //down left
 			{
-				image = ImageIO.read(new File("res/whizkidjback.png"));
+				image = ImageIO.read(new File("res/wizkiddownleft.png"));
 				dir = 6;
 			}
-			else if(direction[1] && direction[2]) //down right
+			else if(direction[1] && direction[3]) //down right
 			{
-				image = ImageIO.read(new File("res/whizkidjback.png"));
+				image = ImageIO.read(new File("res/wizkiddownright.png"));
 				dir = 7;
 			}
 			else if(direction[0]) //up
@@ -114,18 +114,20 @@ public class Player extends Entity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (tick % 30 == 0)
-		{
-		AffineTransform save = g.getTransform();
-		AffineTransform scale = new AffineTransform();
-		g.setTransform(scale);
-		g.scale(1, 1.5);
-		
+//		if (tick % 30 == 0)
+//			stretch = !stretch;
+			
 		g.drawImage(image, pos.getX(), pos.getY(), null);
-//		g.setTransform(save);
-		}
-		else
-			g.drawImage(image, pos.getX(), pos.getY(), null);
+//		if(stretch)
+//		{
+//			AffineTransform save = g.getTransform();
+//			AffineTransform scale = new AffineTransform();
+//			g.setTransform(scale);
+//			g.scale(1, 1.5);
+//			
+//			g.drawImage(image, pos.getX(), pos.getY(), null);
+//			g.setTransform(save);
+//		}
 		
 		for(int i = 0; i < direction.length; i++)
 			direction[i] = false;
