@@ -13,10 +13,11 @@ public class Projectile {
 	private int dx, dy;
 	private BufferedImage image;
 	private int width, height;
-	
-	public Projectile(int direction, int x, int y)
+	private int damage;
+	public Projectile(int direction, int x, int y, int damagen)
 	{
 		speed = 10;
+		damage = damagen;
 		switch (direction){
 		case 0: //up
 			dx = 0; dy = -1 * speed; break;
@@ -36,6 +37,7 @@ public class Projectile {
 			dx = 1 * speed; dy = 1 * speed; break;
 		default:
 			System.out.println("No projectile direction"); break;
+		
 		}
 		width = height = 0;
 		pos = new Location(x, y);
@@ -64,5 +66,10 @@ public class Projectile {
 	public int getY() {return pos.getY();}
 	public int getWidth() {return this.width;}
 	public int getHeight() {return this.height;}
+<<<<<<< HEAD
+	public int getDamage(){return this.damage;}
+=======
 	public Rectangle getBounds() {return new Rectangle(pos.getX(), pos.getY(), width, height);}
+>>>>>>> ae935f622cb201da725b7dd00220a7db8c13f692
 }
+

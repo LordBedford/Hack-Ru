@@ -58,15 +58,20 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		requestFocus();
 		addKeyListener(this);
 		addMouseMotionListener(this);
+		
 		creatures = new ArrayList<Monster>();
 		player = new Player(100,4,width/2,height/2);
 //		creatures.add(monster = new Monster (100,2,0,0,0));
 		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
+<<<<<<< HEAD
 		hBar = new HealthBar();
 		mBar = new ManaBar();
 		gameOver = false;
 	}
+=======
+		}
+>>>>>>> 118b05869ef35d5780de5f7083a65b8cf6084cf7
 	//update
 	public void tick ()
 	{
@@ -129,6 +134,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			
 			//delete projectile out of frame
 			for(int i = 0; i < magic.size(); i++)
+<<<<<<< HEAD
 			{
 				if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
 						|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
@@ -136,12 +142,61 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			}
 			if(player.getHealth() <= 0)
 				gameOver = true;
+=======
+				magic.get(i).update();
+<<<<<<< HEAD
+		for(int i = 0;i < creatures.size();i++)
+			//checks to see if projectiles are within monster hitbox
+		{
+			for(int j = 0;j < magic.size();j++)
+			{
+				if(creatures.get(i).getHitBox().contains(magic.get(j).getX(), magic.get(j).getY()))
+				{
+					if(creatures.get(i).takeDamage(magic.get(j).getDamage()))
+					{
+						creatures.remove(i);
+						i--;
+					}
+					System.out.println("hit");
+					magic.remove(j);
+					j--;
+				}
+				
+			}
+		}
+=======
+		//checks to see if projectiles are within monster hitbox
+		
+>>>>>>> ae935f622cb201da725b7dd00220a7db8c13f692
+		//delete projectile out of frame
+		for(int i = 0; i < magic.size(); i++)
+		{
+			if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
+					|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
+					magic.remove(i);
+>>>>>>> 118b05869ef35d5780de5f7083a65b8cf6084cf7
 		}
 	}
 	//render
 	public void paintComponent (Graphics g)
 	{
+		for(int i = 0; i < 22;i++)
+			for(int j = 0; j < 17 ;j++)
+			{	
+				BufferedImage image = null;
+				try {
+					image = ImageIO.read(new File("res/GroundTile.png"));
+					g.drawImage(image, 0, 0,1080,810, null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		super.paintComponent(g);
+<<<<<<< HEAD
+		g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
+		g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
+		g.drawString("Projectile: " + magic.size(), 500, 50);
+=======
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
@@ -159,6 +214,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+>>>>>>> ae935f622cb201da725b7dd00220a7db8c13f692
 		
 //		g.drawImage(image, 0, 0,1080,810, null);
 		player.draw((Graphics2D)g);
@@ -171,8 +227,12 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).draw((Graphics2D)g);
 		}
+<<<<<<< HEAD
 		hBar.draw((Graphics2D)g);
 		mBar.draw((Graphics2D)g);
+=======
+		
+>>>>>>> 118b05869ef35d5780de5f7083a65b8cf6084cf7
 	}
 	
 	@Override
@@ -197,9 +257,14 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		if(keyCode == KeyEvent.VK_J){
 			if(player.hasMana())
 			{
+<<<<<<< HEAD
 				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY()));
 				player.decMana(1);
 				mBar.setMana(player.getMana());
+=======
+				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY(),100));
+				player.decMana();
+>>>>>>> 118b05869ef35d5780de5f7083a65b8cf6084cf7
 			}
 		}
 	}
