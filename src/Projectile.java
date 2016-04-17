@@ -66,10 +66,10 @@ public class Projectile {
 	public int getY() {return pos.getY();}
 	public int getWidth() {return this.width;}
 	public int getHeight() {return this.height;}
-<<<<<<< HEAD
+
 	public int getDamage(){return this.damage;}
-=======
+
 	public Rectangle getBounds() {return new Rectangle(pos.getX(), pos.getY(), width, height);}
->>>>>>> ae935f622cb201da725b7dd00220a7db8c13f692
+
 }
 
