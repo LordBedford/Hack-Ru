@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -30,6 +31,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private int monsterSpawnRate = 300;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 	private final int MONSTERSPAWNCAP = 10;
+	private boolean gameOver;
+	
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame ("Game thing");
@@ -54,10 +57,11 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		addKeyListener(this);
 		addMouseMotionListener(this);
 		creatures = new ArrayList<Monster>();
-		player = new Player(100,4,0,0);
-		creatures.add(monster = new Monster (100,2,0,0,0));
+		player = new Player(100,4,width/2,height/2);
+//		creatures.add(monster = new Monster (100,2,0,0,0));
 		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
+		gameOver = false;
 	}
 	//update
 	public void tick ()
@@ -80,7 +84,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			}
 			else
 				monsterSpawnCounter++;
-		//check collision
+		//check collision between projectile and entity
 		int count = 0;
 		loop:
 		for(int i = 0; i < magic.size(); i++)
@@ -88,7 +92,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			for(int j = 0; j < creatures.size(); j++)
 			{
 				System.out.println(i + " " + j);
-				if(magic.size() == 0)
+				if(magic.size() == i)
 					break loop;
 				if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
 				{
@@ -102,7 +106,10 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		}
 		for(int i = 0; i < creatures.size();i++)//updates all entities in the array.
 		{
-			creatures.get(i).update();
+			if(!creatures.get(i).getBounds().intersects(player.getBounds()))
+				creatures.get(i).update();
+			else
+				player.decHealth(.5);
 		}
 		player.update();
 		//update projectile
@@ -118,7 +125,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 					|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
 					magic.remove(i);
 		}
-	
+		if(player.getHealth() <= 0)
+			gameOver = true;
 	}
 	//render
 	public void paintComponent (Graphics g)
@@ -130,6 +138,14 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
 			g.drawString("Projectile Left: " + player.getMana(), 500, 50);
+			g.drawString("Health: " + player.getHealth(), 500, 60);
+			if(gameOver)
+			{
+				Font gameOverFont = new Font(Font.DIALOG, Font.BOLD, 30);
+				g.setFont(gameOverFont);
+				g.drawString("GG m8", this.width/2, this.height/2);
+				return;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -146,6 +162,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 				magic.get(i).draw((Graphics2D)g);
 		}
 	}
+	
 	@Override
 	public void keyTyped(KeyEvent key) {
 		
@@ -169,7 +186,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			if(player.hasMana())
 			{
 				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY()));
-				player.decMana();
+				player.decMana(1);
 			}
 		}
 	}

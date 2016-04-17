@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class Monster extends Entity
 {
 	//Monster instance variables
-	private int health;
+	private double health;
 	private int speed;
 	private int damage;
 	private int posx;
@@ -25,7 +25,7 @@ public class Monster extends Entity
 		posx = x;
 		posy = y;
 	}
-	public int getHealth()//returns monster's current health
+	public double getHealth()//returns monster's current health
 	{
 		return health;
 	}
@@ -37,6 +37,9 @@ public class Monster extends Entity
 	{
 		return damage;
 	}
+	public void setX(int x){posx = x;}
+	public void setY(int y){posy = y;}
+	
 	public void update()
 	{
 		int playerposy = Driver.player.getY() - 50;
