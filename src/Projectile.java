@@ -11,31 +11,32 @@ public class Projectile {
 	private int speed;
 	private int dx, dy;
 	private BufferedImage image;
+	private int width, height;
 	
 	public Projectile(int direction, int x, int y)
 	{
-		speed = 6;
+		speed = 10;
 		switch (direction){
 		case 0: //up
-			dx = 0; dy = -1; break;
+			dx = 0; dy = -1 * speed; break;
 		case 1: //down
-			dx = 0; dy = 1; break;
+			dx = 0; dy = 1 * speed; break;
 		case 2: //left
-			dx = -1; dy = 0; break;
+			dx = -1 * speed; dy = 0; break;
 		case 3: //right
-			dx = 1; dy = 0; break;
+			dx = 1 * speed; dy = 0; break;
 		case 4: //up left
-			dx = -1; dy = -1; break;
+			dx = -1 * speed; dy = -1 * speed; break;
 		case 5: //up right
-			dx = 1; dy = -1; break;
+			dx = 1 * speed; dy = -1 * speed; break;
 		case 6: //down left
-			dx = -1; dy = 1; break;
+			dx = -1 * speed; dy = 1* speed; break;
 		case 7: //down right
-			dx = 1; dy = 1; break;
+			dx = 1 * speed; dy = 1 * speed; break;
 		default:
 			System.out.println("No projectile direction"); break;
 		}
-		
+		width = height = 0;
 		pos = new Location(x, y);	
 	}
 	
@@ -48,10 +49,17 @@ public class Projectile {
 	public void draw(Graphics2D g)
 	{
 		try {
-			image = ImageIO.read(new File("res/cat.jpg"));
+			image = ImageIO.read(new File("res/flyingspider.png"));
+			width = image.getHeight();
+			height = image.getHeight();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		g.drawImage(image, pos.getX(), pos.getY(), null);
 	}
+	
+	public int getX() {return pos.getX();}
+	public int getY() {return pos.getY();}
+	public int getWidth() {return this.width;}
+	public int getHeight() {return this.height;}
 }

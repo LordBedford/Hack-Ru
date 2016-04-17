@@ -16,10 +16,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class driver extends JPanel implements KeyListener, MouseMotionListener
+public class Driver extends JPanel implements KeyListener, MouseMotionListener
 {
 
 	private int mouseX, mouseY;
+	private final int width = 1080, height = 810;
 	public static Player player;
 	private Monster monster;
 	private ArrayList<Entity> creatures;
@@ -31,7 +32,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 	{
 		JFrame frame = new JFrame ("Game thing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		driver panel = new driver();
+		Driver panel = new Driver();
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setResizable(false);
@@ -43,9 +44,9 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		 
 		
 	}
-	public driver ()
+	public Driver ()
 	{
-		this.setPreferredSize(new Dimension(1080,810));
+		this.setPreferredSize(new Dimension(width, height));
 		setFocusable(true);
 		requestFocus();
 		addKeyListener(this);
@@ -78,6 +79,8 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		{
 			creatures.get(i).update();
 		}
+		
+		//update projectile
 		if(player.hasMana() && !magic.isEmpty())
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).update();
@@ -88,9 +91,16 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 			{
 				//if(magic.get(j).)
 			}
+		//delete projectile out of frame
 		}
-	}
+		for(int i = 0; i < magic.size(); i++)
+		{
+			if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
+					|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
+					magic.remove(i);
+		}
 	
+	}
 	//render
 	public void paintComponent (Graphics g)
 	{
@@ -100,11 +110,12 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
+			g.drawString("Projectile: " + magic.size(), 500, 50);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		g.drawImage(image, 0, 0,1080,810, null);
+//		g.drawImage(image, 0, 0,1080,810, null);
 		for(int i = 0; i < creatures.size();i++)
 		{
 			creatures.get(i).draw((Graphics2D)g);

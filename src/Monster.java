@@ -40,6 +40,7 @@ public class Monster extends Entity
 	}
 	public void update()
 	{
+<<<<<<< HEAD
 		int playerposy = driver.player.getY() - 50;
 		int playerposx = driver.player.getX() - 10;
 //		if(driver.player.getY() != posy && driver.player.getX() != posx)
@@ -63,6 +64,41 @@ public class Monster extends Entity
 		if(playerposx > posx)	
 		
 			hitBox.setFrame(posx,posy,100,100);
+=======
+		int playerposy = Driver.player.getY() - 50;
+		int playerposx = Driver.player.getX() - 10;
+		if(Driver.player.getY() != posy && Driver.player.getX() != posx)
+		{
+			double tempspeed = speed/2;
+			if(playerposy > posy)//Changes monsters y to be equal to player
+				posy = (int)(posy + tempspeed);
+			else if (playerposy < posy)
+				posy -= (int)tempspeed;
+			if(playerposx > posx)
+			{
+				posx += (int)tempspeed;
+				
+			}
+			else if(playerposx < posx)
+			{
+				posx -= (int)tempspeed;
+			}
+		}
+		else
+		{
+			if(Driver.player.getY() > posy)//Changes monsters y to be equal to player
+				posy = posy + speed;
+			else if (Driver.player.getY() < posy)
+				posy -= speed;
+			if(Driver.player.getX() > posx)
+			{
+				posx += speed;
+			}
+			else if(Driver.player.getX() < posx)
+			{
+				posx -= speed;
+			}
+>>>>>>> c7919fdabb85eda4bbcdd295b452aca462022b11
 		}
 //		else
 //		{
