@@ -13,11 +13,13 @@ public abstract class Projectile {
 	protected double dx, dy;
 	protected BufferedImage image;
 	protected int width, height;
-	protected int damage;
-	public Projectile(int direction, double x, double y, int damagen)
+	protected double damage;
+	protected int effect;
+	public Projectile(int direction, double x, double y, double damagen, int effect)
 	{
 		speed = 10;
 		damage = damagen;
+		this.effect = effect;
 		switch (direction){
 		case 0: //up
 			dx = 0; dy = -1 * speed; break;
@@ -56,7 +58,8 @@ public abstract class Projectile {
 	public double getY() {return pos.getY();}
 	public int getWidth() {return this.width;}
 	public int getHeight() {return this.height;}
-	public int getDamage(){return this.damage;}
+	public double getDamage(){return this.damage;}
+	public int getEffect() {return effect;}
 	public Rectangle getBounds() {return new Rectangle((int)pos.getX(), (int)pos.getY(), width, height);}
 
 }

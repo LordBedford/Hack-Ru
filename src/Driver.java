@@ -25,7 +25,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private final int width = 1080, height = 810;
 	public static Player player;
 	private NormalWeapon normWeapon;
-	private Monster monster;
 	private ArrayList<Monster> creatures;
 	private ArrayList<Projectile> magic;
 	private int monsterSpawnRate = 300;//Spawns monsters every x ticks
@@ -111,9 +110,10 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 						break loop;
 					if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
 					{
-						if(magic.get(i).getDamage() == 1)
-							creatures.get(i).setSpeed(.2);
-						else
+						if(magic.get(i).getEffect() == 1)
+						creatures.get(j).setSpeed(.2);
+						
+						if(creatures.get(j).takeDamage(magic.get(i).getDamage()))
 						{
 							creatures.remove(j);
 							count++;
