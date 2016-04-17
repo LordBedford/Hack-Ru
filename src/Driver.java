@@ -40,7 +40,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	{
 		JFrame frame = new JFrame ("Game thing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Driver panel = new Driver();
+		final Driver panel = new Driver();
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setResizable(false);
@@ -158,7 +158,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	public void paintComponent (Graphics g)
 	{
 		super.paintComponent(g);
-		if(Math.random()<0.001)
+		if(Math.random()<0.09)
 			secret=60;
 		if(secret>0)
 		{
