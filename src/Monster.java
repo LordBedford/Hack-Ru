@@ -39,19 +39,21 @@ public class Monster extends Entity
 	public void update()
 	{
 
+		int playerposy = driver.player.getY() + 50;
+		int playerposx = driver.player.getX() + 50;
 		if(driver.player.getY() != posy && driver.player.getX() != posx)
 		{
 			double tempspeed = speed/2;
-			if(driver.player.getY() > posy)//Changes monsters y to be equal to player
+			if(playerposy > posy)//Changes monsters y to be equal to player
 				posy = (int)(posy + tempspeed);
-			else if (driver.player.getY() < posy)
+			else if (playerposy < posy)
 				posy -= (int)tempspeed;
-			if(driver.player.getX() > posx)
+			if(playerposx > posx)
 			{
 				posx += (int)tempspeed;
 				
 			}
-			else if(driver.player.getX() < posx)
+			else if(playerposx < posx)
 			{
 				posx -= (int)tempspeed;
 			}
