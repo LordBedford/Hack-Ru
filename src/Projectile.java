@@ -68,5 +68,6 @@ public class Projectile {
 	public int getHeight() {return this.height;}
 	public int getDamage(){return this.damage;}
 	public Rectangle getBounds() {return new Rectangle(pos.getX(), pos.getY(), width, height);}
+
 }
 

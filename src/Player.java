@@ -14,6 +14,7 @@ public class Player extends Entity {
 	private int speed;
 	private int dx, dy;
 	private BufferedImage image;
+	private double health;
 	private int mana;
 	private int mouseX, mouseY;
 	/**
@@ -39,6 +40,7 @@ public class Player extends Entity {
 		direction[1] = true;
 		dir = 2;
 		mana = 10;
+		health = 100.0;
 //		tick = 0;
 //		stretch = false;
 
@@ -142,20 +144,21 @@ public class Player extends Entity {
 	}
 
 	public boolean hasMana() {if(mana > 0) return true; else return false;}
-	public int getDirection() {return dir;}
 	public void setUp(boolean b) {up = b;}
 	public void setDown(boolean b) {down = b;}
 	public void setLeft(boolean b) {left = b;}
 	public void setRight(boolean b) {right = b;}
 	public void setMouseX(int x) {mouseX = x;}
 	public void setMouseY(int y) {mouseY = y;}
-	public void decMana() {mana--;}
+	public void decMana(int x) {mana-= x;}
+	public void decHealth(double x) {health -= x;};
 	public int getX() {return pos.getX();}
 	public int getY() {return pos.getY();}
 	public int getDamage() {return 0;}
-	public int getHealth() {return 0;}
+	public double getHealth() {return health;}
 	public int getSpeed() {return speed;}
 	public int getMana() {return mana;}
+	public int getDirection() {return dir;}
 	public Rectangle getBounds(){return new Rectangle(pos.getX(), pos.getY(), 
 			pos.getX() + image.getWidth(), pos.getY() + image.getHeight());}
 	public int getMouseX() {return mouseX;}

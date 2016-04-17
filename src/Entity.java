@@ -28,7 +28,7 @@ public abstract class Entity {
 	{
 		return posy;
 	}
-	public int getHealth()
+	public double getHealth()
 	{
 		return health;
 	}
