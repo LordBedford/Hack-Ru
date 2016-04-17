@@ -155,6 +155,7 @@ public class Player extends Entity {
 	public int getDamage() {return 0;}
 	public int getHealth() {return 0;}
 	public int getSpeed() {return speed;}
+	public int getMana() {return mana;}
 	public Rectangle getBounds(){return new Rectangle(pos.getX(), pos.getY(), 
 			pos.getX() + image.getWidth(), pos.getY() + image.getHeight());}
 	public int getMouseX() {return mouseX;}

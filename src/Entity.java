@@ -10,14 +10,15 @@ public abstract class Entity {
 	private int speed;
 	private int posx;
 	private int posy;
-	private Rectangle hitBox;
+	private int width, height;
 	public Entity (int h,int s,int x,int y)
 	{
 		 health = h;
 		 speed = s;
 		 posx = x;
 		 posy = y;
-		 hitBox = new Rectangle(x,y,100,100);
+		 width = 100;
+		 height = 100;
 	}
 	public	int getX()
 	{
@@ -35,10 +36,7 @@ public abstract class Entity {
 	{
 		return speed;
 	}
-	public 	Rectangle getBounds() 
-	{
-		return hitBox;
-	}
+	public abstract Rectangle getBounds();
 		
 	public void update()
 	{

@@ -14,7 +14,7 @@ public class Monster extends Entity
 	private int damage;
 	private int posx;
 	private int posy;
-	private Rectangle hitBox;
+	private int width, height;
 	
 	public Monster (int h,int s,int d, int x, int y)//Creates basic monster object
 	{
@@ -24,7 +24,6 @@ public class Monster extends Entity
 		damage = d;
 		posx = x;
 		posy = y;
-		hitBox = new Rectangle(x,y,100,100);
 	}
 	public int getHealth()//returns monster's current health
 	{
@@ -64,7 +63,6 @@ public class Monster extends Entity
 //		posx =(int) (distancex / distancetot);
 //		posy = (int)(distancey / distancetot);
 		
-			hitBox.setFrame(posx,posy,120,120);
 
 		}
 			else
@@ -89,14 +87,16 @@ public class Monster extends Entity
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("res/ghost2.0.png"));
+			width = image.getWidth();
+			height = image.getHeight();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		g.drawImage(image, posx, posy, null);
 	}
-	public Rectangle getHitBox()
+	public Rectangle getBounds()
 	{
-		return hitBox;
+		return new Rectangle(posx, posy, width, height);
 	}
 	public boolean takeDamage(int damage)
 	{
