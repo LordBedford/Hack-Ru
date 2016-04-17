@@ -16,6 +16,7 @@ public class Player extends Entity {
 	private BufferedImage image;
 	private int mana;
 	private int mouseX, mouseY;
+	private boolean[] direction;
 	
 	
 	public Player(int h, int s, int x, int y)
@@ -25,18 +26,32 @@ public class Player extends Entity {
 		dx = 0;
 		dy = 0;
 		speed = s;
+		direction = new boolean[4];
+		direction[1] = true;
 	}
 	
 	public void update(){
 		//move player
 		if(up)
+		{
 			dy = -speed;
+			direction[0] = true;
+		}
 		if(down)
+		{
 			dy = speed;
+			direction[1] = true;
+		}
 		if(left)
+		{
 			dx = -speed;
+			direction[2] = true;
+		}
 		if(right)
+		{
 			dx = speed;
+			direction[3] = true;
+		}
 		pos.incX(dx);
 		pos.incY(dy);
 		
@@ -45,11 +60,30 @@ public class Player extends Entity {
 	
 	public void draw(Graphics2D g){
 		try {
-			image = ImageIO.read(new File("res/wizkidj.jpg"));
+			if(direction[0] && direction[2])
+				image = ImageIO.read(new File("res/wizkidj.jpg"));
+			else if(direction[0] && direction[3])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[1] && direction[2])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[1] && direction[2])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[0])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[1])
+				image = ImageIO.read(new File("res/wizkidj.jpg"));
+			else if(direction[2])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
+			else if(direction[3])
+				image = ImageIO.read(new File("res/whizkidjback.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		g.drawImage(image, pos.getX(), pos.getY(), null);
+		
+		for(int i = 0; i < direction.length; i++)
+			direction[i] = false;
+		
 
 	}
 
