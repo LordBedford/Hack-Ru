@@ -110,7 +110,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 //		g.drawImage(image, 0, 0,1080,810, null);
 		for(int i = 0; i < creatures.size();i++)
 		{
