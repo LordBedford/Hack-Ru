@@ -70,7 +70,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			imagegas =ImageIO.read(new File("res/SolidPoisonTile.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		 }
 	
 		hBar = new HealthBar();
 		mBar = new ManaBar();
@@ -150,13 +150,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			}
 			if(player.getHealth() <= 0)
 				gameOver = true;
-		}
-		//delete projectile out of frame
-		for(int i = 0; i < magic.size(); i++)
-		{
-			if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
-					|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
-					magic.remove(i);
 		}
 	}
 	
