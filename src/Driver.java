@@ -32,6 +32,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 	private final int MONSTERSPAWNCAP = 10;
 	private boolean gameOver;
+	private HealthBar hBar;
+	private ManaBar mBar;
 	
 	public static void main(String[] args) 
 	{
@@ -61,72 +63,80 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 //		creatures.add(monster = new Monster (100,2,0,0,0));
 		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
+		hBar = new HealthBar();
+		mBar = new ManaBar();
 		gameOver = false;
 	}
 	//update
 	public void tick ()
 	{
-		if(creatures.size()<=MONSTERSPAWNCAP)
-			if(monsterSpawnCounter == monsterSpawnRate)
-			{
-				int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
-				creatures.add(new Monster(100,2,0,spawnpos,0));
-				int side = (int)(Math.random() * 4);
-				if(side == 0)
-					creatures.add(new Monster(100,2,0,spawnpos,0));
-				else if(side == 1)
-					creatures.add(new Monster(100,2,0,0,spawnpos));
-				else if(side == 2)
-					creatures.add(new Monster(100,2,0,1080,spawnpos));
-				else
-					creatures.add(new Monster(100,2,0,spawnpos,810));
-				monsterSpawnCounter = 0;
-			}
-			else
-				monsterSpawnCounter++;
-		//check collision between projectile and entity
-		int count = 0;
-		loop:
-		for(int i = 0; i < magic.size(); i++)
+		if(!gameOver)
 		{
-			for(int j = 0; j < creatures.size(); j++)
-			{
-				System.out.println(i + " " + j);
-				if(magic.size() == i)
-					break loop;
-				if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
+			if(creatures.size()<=MONSTERSPAWNCAP)
+				if(monsterSpawnCounter == monsterSpawnRate)
 				{
-					magic.remove(i);
-					creatures.remove(j);
-					j--;
-					count++;
+					int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
+					creatures.add(new Monster(100,2,0,spawnpos,0));
+					int side = (int)(Math.random() * 4);
+					if(side == 0)
+						creatures.add(new Monster(100,2,0,spawnpos,0));
+					else if(side == 1)
+						creatures.add(new Monster(100,2,0,0,spawnpos));
+					else if(side == 2)
+						creatures.add(new Monster(100,2,0,1080,spawnpos));
+					else
+						creatures.add(new Monster(100,2,0,spawnpos,810));
+					monsterSpawnCounter = 0;
+				}
+				else
+					monsterSpawnCounter++;
+			//check collision between projectile and entity
+			int count = 0;
+			loop:
+			for(int i = 0; i < magic.size(); i++)
+			{
+				for(int j = 0; j < creatures.size(); j++)
+				{
+					System.out.println(i + " " + j);
+					if(magic.size() == i)
+						break loop;
+					if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
+					{
+						magic.remove(i);
+						creatures.remove(j);
+						j--;
+						count++;
+					}
+				}
+				i -= count;
+			}
+			for(int i = 0; i < creatures.size();i++)//updates all entities in the array.
+			{
+				if(!creatures.get(i).getBounds().intersects(player.getBounds()))
+					creatures.get(i).update();
+				else
+				{
+					player.decHealth(.5);
+					hBar.setHealth(player.getHealth());
 				}
 			}
-			i -= count;
-		}
-		for(int i = 0; i < creatures.size();i++)//updates all entities in the array.
-		{
-			if(!creatures.get(i).getBounds().intersects(player.getBounds()))
-				creatures.get(i).update();
-			else
-				player.decHealth(.5);
-		}
-		player.update();
-		//update projectile
-		if(!magic.isEmpty())
+			player.update();
+			//update projectile
+			if(!magic.isEmpty())
+				for(int i = 0; i < magic.size(); i++)
+					magic.get(i).update();
+			//checks to see if projectiles are within monster hitbox
+			
+			//delete projectile out of frame
 			for(int i = 0; i < magic.size(); i++)
-				magic.get(i).update();
-		//checks to see if projectiles are within monster hitbox
-		
-		//delete projectile out of frame
-		for(int i = 0; i < magic.size(); i++)
-		{
-			if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
-					|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
-					magic.remove(i);
+			{
+				if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
+						|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
+						magic.remove(i);
+			}
+			if(player.getHealth() <= 0)
+				gameOver = true;
 		}
-		if(player.getHealth() <= 0)
-			gameOver = true;
 	}
 	//render
 	public void paintComponent (Graphics g)
@@ -141,10 +151,10 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			g.drawString("Health: " + player.getHealth(), 500, 60);
 			if(gameOver)
 			{
-				Font gameOverFont = new Font(Font.DIALOG, Font.BOLD, 30);
+				Font gameOverFont = new Font(Font.DIALOG, Font.BOLD, 100);
 				g.setFont(gameOverFont);
 				g.drawString("GG m8", this.width/2, this.height/2);
-				return;
+				return; //fix to end loop
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -161,6 +171,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).draw((Graphics2D)g);
 		}
+		hBar.draw((Graphics2D)g);
+		mBar.draw((Graphics2D)g);
 	}
 	
 	@Override
@@ -187,6 +199,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			{
 				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY()));
 				player.decMana(1);
+				mBar.setMana(player.getMana());
 			}
 		}
 	}
