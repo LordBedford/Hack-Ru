@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,8 @@ public class Projectile {
 			System.out.println("No projectile direction"); break;
 		}
 		width = height = 0;
-		pos = new Location(x, y);	
+		pos = new Location(x, y);
+		 //fix with dimensions
 	}
 	
 	public void update()
@@ -62,4 +64,5 @@ public class Projectile {
 	public int getY() {return pos.getY();}
 	public int getWidth() {return this.width;}
 	public int getHeight() {return this.height;}
+	public Rectangle getBounds() {return new Rectangle(pos.getX(), pos.getY(), width, height);}
 }

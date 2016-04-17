@@ -69,9 +69,9 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 				creatures.add(new Monster(100,2,0,spawnpos,0));
 				int side = (int)(Math.random() * 4);
 				if(side == 0)
-				creatures.add(new Monster(100,2,0,spawnpos,0));
+					creatures.add(new Monster(100,2,0,spawnpos,0));
 				else if(side == 1)
-				creatures.add(new Monster(100,2,0,0,spawnpos));
+					creatures.add(new Monster(100,2,0,0,spawnpos));
 				else if(side == 2)
 					creatures.add(new Monster(100,2,0,1080,spawnpos));
 				else
@@ -80,6 +80,26 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			}
 			else
 				monsterSpawnCounter++;
+		//check collision
+		int count = 0;
+		loop:
+		for(int i = 0; i < magic.size(); i++)
+		{
+			for(int j = 0; j < creatures.size(); j++)
+			{
+				System.out.println(i + " " + j);
+				if(magic.size() == 0)
+					break loop;
+				if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
+				{
+					magic.remove(i);
+					creatures.remove(j);
+					j--;
+					count++;
+				}
+			}
+			i -= count;
+		}
 		for(int i = 0; i < creatures.size();i++)//updates all entities in the array.
 		{
 			creatures.get(i).update();
@@ -89,25 +109,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		if(!magic.isEmpty())
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).update();
-		for(int i = 0;i < creatures.size();i++)
-			//checks to see if projectiles are within monster hitbox
-		{
-			for(int j = 0;j < magic.size();j++)
-			{
-				if(creatures.get(i).getHitBox().contains(magic.get(j).getX(), magic.get(j).getY()))
-				{
-//					if(creatures.get(i).takeDamage(magic.get(j).getDamage()))
-//					{
-//						creatures.remove(i);
-//						i--;
-//					}
-					System.out.println("hit");
-					magic.remove(j);
-					j--;
-				}
-				
-			}
-		}
+		//checks to see if projectiles are within monster hitbox
+		
 		//delete projectile out of frame
 		for(int i = 0; i < magic.size(); i++)
 		{
@@ -126,7 +129,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
-			g.drawString("Projectile: " + magic.size(), 500, 50);
+			g.drawString("Projectile Left: " + player.getMana(), 500, 50);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
