@@ -18,6 +18,7 @@ public class Player extends Entity {
 	private int mouseX, mouseY;
 	private boolean[] direction;
 	private int dir; //direction in int numerals for getDirection method
+	private int tick;
 	
 	
 	public Player(int h, int s, int x, int y)
@@ -31,6 +32,7 @@ public class Player extends Entity {
 		direction[1] = true;
 		dir = 2;
 		mana = 10;
+		tick = 0;
 	}
 	
 	public void update(){
@@ -62,6 +64,7 @@ public class Player extends Entity {
 	}
 	
 	public void draw(Graphics2D g){
+		tick++;
 		try {
 			if(direction[0] && direction[2]) //up left
 			{
@@ -106,7 +109,18 @@ public class Player extends Entity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		if (tick % 30 == 0)
+		{
+		AffineTransform save = g.getTransform();
+		AffineTransform scale = new AffineTransform();
+		g.setTransform(scale);
+		g.scale(1, 1.5);
+		
 		g.drawImage(image, pos.getX(), pos.getY(), null);
+//		g.setTransform(save);
+		}
+		else
+			g.drawImage(image, pos.getX(), pos.getY(), null);
 		
 		for(int i = 0; i < direction.length; i++)
 			direction[i] = false;
