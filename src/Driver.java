@@ -62,8 +62,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		
 		creatures = new ArrayList<Monster>();
 		player = new Player(100,4,width/2,height/2);
-//		creatures.add(monster = new Monster (100,2,0,0,0));
-		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
 		
 		try {
@@ -109,7 +107,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			{
 				for(int j = 0; j < creatures.size(); j++)
 				{
-					System.out.println(i + " " + j);
 					if(magic.size() == i)
 						break loop;
 					if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
@@ -163,15 +160,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	//render
 	public void paintComponent (Graphics g)
 	{
-		for(int i = 0; i < 6;i++)
-			for(int j = 0; j < 5 ;j++)
-			{	
-				g.drawImage(image, 0, 0,1080,810, null);
-			}
 		super.paintComponent(g);
-
-
-		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
@@ -226,7 +215,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		if(keyCode == KeyEvent.VK_J){
 			if(player.hasMana())
 			{
-				magic.add(new Projectile(player.getDirection(), player.getX(), player.getY(),0));
+				magic.add(new FireBall(player.getDirection(), player.getX(), player.getY(),0));
 				player.decMana(1);
 				mBar.setMana(player.getMana());
 			}
