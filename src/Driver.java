@@ -32,7 +32,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 
 	public static void main(String[] args) 
 	{
-		JFrame frame = new JFrame ("Game thing");
+		JFrame frame = new JFrame ("Cavern Conjurer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Driver panel = new Driver();
 		frame.getContentPane().add(panel);
@@ -53,32 +53,33 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		requestFocus();
 		addKeyListener(this);
 		addMouseMotionListener(this);
+		addMouseListener(this);
 		creatures = new ArrayList<Entity>();
 		creatures.add(player = new Player(100,4,0,0));
-		creatures.add(monster = new Monster (100,2,0,0,0));
+//		creatures.add(monster = new Monster (100,2,0,0,0));
 		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
 	}
 	//update
 	public void tick ()
 	{
-		if(monsterSpawnCounter == monsterSpawnRate)
-		{
-			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
-			creatures.add(new Monster(100,2,0,spawnpos,0));
-			int side = (int)(Math.random() * 4);
-			if(side == 0)
-				creatures.add(new Monster(100,2,0,spawnpos,0));
-			else if(side == 1)
-				creatures.add(new Monster(100,2,0,0,spawnpos));
-			else if(side == 2)
-				creatures.add(new Monster(100,2,0,1080,spawnpos));
-			else
-				creatures.add(new Monster(100,2,0,spawnpos,810));
-			monsterSpawnCounter = 0;
-		}
-		else
-			monsterSpawnCounter++;
+//		if(monsterSpawnCounter == monsterSpawnRate)
+//		{
+//			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
+//			creatures.add(new Monster(100,2,0,spawnpos,0));
+//			int side = (int)(Math.random() * 4);
+//			if(side == 0)
+//				creatures.add(new Monster(100,2,0,spawnpos,0));
+//			else if(side == 1)
+//				creatures.add(new Monster(100,2,0,0,spawnpos));
+//			else if(side == 2)
+//				creatures.add(new Monster(100,2,0,1080,spawnpos));
+//			else
+//				creatures.add(new Monster(100,2,0,spawnpos,810));
+//			monsterSpawnCounter = 0;
+//		}
+//		else
+//			monsterSpawnCounter++;
 		for(int i = 0; i < creatures.size();i++)//updates all entities in the array.
 		{
 			creatures.get(i).update();
@@ -171,12 +172,11 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		player.setMouseX(e.getX());
 		player.setMouseY(e.getY());
 	}
-	@Override
+	
 	public void mouseClicked(MouseEvent e)
 	{
-		
 	}
-	@Override
+	
 	public void mousePressed(MouseEvent e) 
 	{
 		int mouseCode = e.getButton();
@@ -185,20 +185,17 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			normWeapon.attack();
 		}
 	}
-	@Override
+	
 	public void mouseReleased(MouseEvent e)
 	{
-		
 	}
-	@Override
+	
 	public void mouseEntered(MouseEvent e)
 	{
-		
 	}
-	@Override
+	
 	public void mouseExited(MouseEvent e)
 	{
-		
 	}
 	
 }
