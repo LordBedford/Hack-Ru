@@ -30,6 +30,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private int monsterSpawnRate = 300;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 	private final int MONSTERSPAWNCAP = 10;
+	private BufferedImage image = null;
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame ("Game thing");
@@ -59,7 +60,14 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		creatures.add(monster = new Monster (100,2,0,0,0));
 		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
+		
+		try {
+			image = ImageIO.read(new File("res/GroundTile.png"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 	//update
 	public void tick ()
 	{
@@ -110,7 +118,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		if(!magic.isEmpty())
 			for(int i = 0; i < magic.size(); i++)
 				magic.get(i).update();
-<<<<<<< HEAD
 		for(int i = 0;i < creatures.size();i++)
 			//checks to see if projectiles are within monster hitbox
 		{
@@ -130,10 +137,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 				
 			}
 		}
-=======
-		//checks to see if projectiles are within monster hitbox
-		
->>>>>>> ae935f622cb201da725b7dd00220a7db8c13f692
 		//delete projectile out of frame
 		for(int i = 0; i < magic.size(); i++)
 		{
@@ -141,28 +144,19 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 					|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
 					magic.remove(i);
 		}
-	
 	}
+	
+	
 	//render
 	public void paintComponent (Graphics g)
 	{
-		for(int i = 0; i < 22;i++)
-			for(int j = 0; j < 17 ;j++)
+		for(int i = 0; i < 6;i++)
+			for(int j = 0; j < 5 ;j++)
 			{	
-				BufferedImage image = null;
-				try {
-					image = ImageIO.read(new File("res/GroundTile.png"));
-					g.drawImage(image, 0, 0,1080,810, null);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				g.drawImage(image, 0, 0,1080,810, null);
 			}
 		super.paintComponent(g);
-<<<<<<< HEAD
-		g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
-		g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
-		g.drawString("Projectile: " + magic.size(), 500, 50);
-=======
+
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("res/GroundTile.png"));
@@ -172,7 +166,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
->>>>>>> ae935f622cb201da725b7dd00220a7db8c13f692
 		
 //		g.drawImage(image, 0, 0,1080,810, null);
 		player.draw((Graphics2D)g);
