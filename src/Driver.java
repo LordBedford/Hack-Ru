@@ -27,14 +27,18 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	private NormalWeapon normWeapon;
 	private ArrayList<Monster> creatures;
 	private ArrayList<Projectile> magic;
-	private int monsterSpawnRate = 300;//Spawns monsters every x ticks
+	private int monsterSpawnRate = 200;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
-	private final int MONSTERSPAWNCAP = 10;
+	private int monsterSpawnCap = 5;
 	private BufferedImage image = null;
 	private BufferedImage imagegas = null;
 	private boolean gameOver;
+	private boolean waveStart;
 	private HealthBar hBar;
 	private ManaBar mBar;
+//	private final int WAVENUMBERS = 5;
+	private int monsterKilled;
+	private int waveCount;
 	
 	public static void main(String[] args) 
 	{
@@ -69,7 +73,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		} catch (IOException e) {
 			e.printStackTrace();
 		 }
-	
+		monsterKilled = 0;
+		waveCount = 0;
 		hBar = new HealthBar();
 		mBar = new ManaBar();
 		gameOver = false;
@@ -81,7 +86,17 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	{
 		if(!gameOver)
 		{
-			if(creatures.size()<=MONSTERSPAWNCAP)
+			if(waveStart)
+			{
+				player.setMana(player.getMaxMana());
+				monsterSpawnRate += 50;
+				monsterSpawnCap += 5;
+				monsterSpawnCounter = 0;
+				monsterKilled = 0;
+				waveCount++;
+				waveStart = false;
+			}
+			if(creatures.size()<=monsterSpawnCap)
 				if(monsterSpawnCounter == monsterSpawnRate)
 				{
 					int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
@@ -111,11 +126,12 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 					if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
 					{
 						if(magic.get(i).getEffect() == 1)
-						creatures.get(j).setSpeed(.2);
+							creatures.get(j).setSpeed(.2);
 						
 						if(creatures.get(j).takeDamage(magic.get(i).getDamage()))
 						{
 							creatures.remove(j);
+							monsterKilled++;
 							count++;
 						}
 						magic.remove(i);
@@ -150,6 +166,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			if(player.getHealth() <= 0)
 				gameOver = true;
 		}
+		if(monsterKilled == monsterSpawnCap)
+			waveStart = true;
 	}
 	
 	private int secret=0;
@@ -158,6 +176,16 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	public void paintComponent (Graphics g)
 	{
 		super.paintComponent(g);
+		
+		if(waveStart)
+		{
+			Font wave = new Font(Font.DIALOG, Font.BOLD, 60);
+			g.setFont(wave);
+			String s = "- W A V E  " + waveCount + "  -";
+			int length = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+			g.drawString(s , this.width/2 - length, this.height/2);
+		}
+		
 		if(Math.random()<0.001)
 			secret=60;
 		if(secret>0)
@@ -241,7 +269,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			if(player.hasMana())
 			{
 				magic.add(new FireBall(player.getDirection(), (int)player.getX(), (int)player.getY()));
-				player.decMana(1);
+//				player.decMana(1);
 				mBar.setMana(player.getMana());
 			}
 		}
@@ -249,7 +277,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			if(player.hasMana())
 			{
 				magic.add(new FrostSpike(player.getDirection(),(int) player.getX(), (int)player.getY()));
-				player.decMana(2);
+//				player.decMana(2);
 				mBar.setMana(player.getMana());
 			}
 		}
