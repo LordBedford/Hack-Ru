@@ -16,7 +16,6 @@ public class Player extends Entity {
 	private BufferedImage image;
 	private int mana;
 	private int mouseX, mouseY;
-	private double mouseAngle;
 	
 	
 	public Player(int h, int s, int x, int y)
@@ -60,7 +59,6 @@ public class Player extends Entity {
 	public void setRight(boolean b) {right = b;}
 	public void setMouseX(int x) {mouseX = x;}
 	public void setMouseY(int y) {mouseY = y;}
-	public double getAngle() {return Math.toDegrees(mouseAngle);}
 	public int getX() {return pos.getX();}
 	public int getY() {return pos.getY();}
 	public int getDamage() {return 0;}
