@@ -11,7 +11,7 @@ public class Monster extends Entity
 	//Monster instance variables
 	private double health;
 	private double speed;
-	private int damage;
+	private double damage;
 	private double posx;
 	private double posy;
 	private int width, height;
@@ -42,7 +42,7 @@ public class Monster extends Entity
 		speed = s;
 		frozen = true;
 	}
-	public int getDamage()//returns monster's current damage
+	public double getDamage()//returns monster's current damage
 	{
 		return damage;
 	}
