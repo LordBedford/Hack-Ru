@@ -26,7 +26,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 	public static Player player;
 	private NormalWeapon normWeapon;
 	private Monster monster;
-	private ArrayList<Monster> creatures;
+	public static ArrayList<Monster> creatures;
 	private ArrayList<Projectile> magic;
 	private int monsterSpawnRate = 300;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn

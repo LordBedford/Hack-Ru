@@ -26,6 +26,13 @@ public class NormalWeapon
 			Arc2D arc = new Arc2D.Double();
 			Rectangle r = new Rectangle(Driver.player.getX(), Driver.player.getY(), range, range);
 			arc.setArc(r, angle - 30, angle + 30, Arc2D.PIE);
+			for(int x = 0; x < Driver.creatures.size(); x++)
+			{
+				if(arc.contains(new Rectangle(Driver.creatures.get(x).getX(), Driver.creatures.get(x).getY(), Driver.creatures.get(x).getWidth(), Driver.creatures.get(x).getHeight())));
+				{
+					Driver.creatures.get(x).takeDamage(damage);
+				}
+			}
 		}
 	}
 	
