@@ -24,9 +24,8 @@ public class Player extends Entity {
 	 */
 	private boolean[] direction;
 	private int dir; //direction in int numerals for getDirection method
-	private int tick;
-	private boolean stretch;
-	private int width, height;
+//	private int tick;
+//	private boolean stretch;
 	
 	
 	public Player(int h, int s, int x, int y)
@@ -40,9 +39,9 @@ public class Player extends Entity {
 		direction[1] = true;
 		dir = 2;
 		mana = 10;
-		tick = 0;
-		stretch = false;
-		width = height = 0;
+//		tick = 0;
+//		stretch = false;
+
 	}
 	
 	public void update(){
@@ -74,7 +73,7 @@ public class Player extends Entity {
 	}
 	
 	public void draw(Graphics2D g){
-		tick++;
+//		tick++;
 		try {
 			if(direction[0] && direction[2]) //up left
 			{
@@ -116,29 +115,27 @@ public class Player extends Entity {
 				image = ImageIO.read(new File("res/whizkidsideright.png"));
 				dir = 3;
 			}
-			width = image.getWidth();
-			height = image.getHeight();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (tick % 25 == 0)
-			stretch = !stretch;
-			
-//		g.drawImage(image, pos.getX(), pos.getY(), null);
-		if(stretch)
-		{
-			AffineTransform save = g.getTransform();
-			AffineTransform scale = new AffineTransform();
-			g.setTransform(scale);
-			g.scale(1.05, 1.05);
-			g.translate(-(pos.getX() * .05), -(pos.getY() * .05));
+//		if (tick % 25 == 0)
+//			stretch = !stretch;
+//			
+////		g.drawImage(image, pos.getX(), pos.getY(), null);
+//		if(stretch)
+//		{
+//			AffineTransform save = g.getTransform();
+//			AffineTransform scale = new AffineTransform();
+//			g.setTransform(scale);
+//			g.scale(1.05, 1.05);
+//			g.translate(-(pos.getX() * .05), -(pos.getY() * .05));
+//			g.drawImage(image, pos.getX(), pos.getY(), null);
+//			g.setTransform(save);
+//		}
+//		else
+//		{
 			g.drawImage(image, pos.getX(), pos.getY(), null);
-			g.setTransform(save);
-		}
-		else
-		{
-			g.drawImage(image, pos.getX(), pos.getY(), null);
-		}
+//		}
 		
 		for(int i = 0; i < direction.length; i++)
 			direction[i] = false;

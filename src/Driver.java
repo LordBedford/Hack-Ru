@@ -98,8 +98,8 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 					
 				}
 			}
-		//delete projectile out of frame
 		}
+		//delete projectile out of frame
 		for(int i = 0; i < magic.size(); i++)
 		{
 			if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
@@ -123,6 +123,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		}
 		
 //		g.drawImage(image, 0, 0,1080,810, null);
+		player.draw((Graphics2D)g);
 		for(int i = 0; i < creatures.size();i++)
 		{
 			creatures.get(i).draw((Graphics2D)g);
