@@ -1,5 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class Player extends Entity {
 	private int speed;
 	private int dx, dy;
 	private BufferedImage image;
+	private double health;
 	private int mana;
 	private int mouseX, mouseY;
 	/**
@@ -23,6 +25,8 @@ public class Player extends Entity {
 	 */
 	private boolean[] direction;
 	private int dir; //direction in int numerals for getDirection method
+//	private int tick;
+//	private boolean stretch;
 	
 	
 	public Player(int h, int s, int x, int y)
@@ -36,6 +40,10 @@ public class Player extends Entity {
 		direction[1] = true;
 		dir = 2;
 		mana = 10;
+		health = 100.0;
+//		tick = 0;
+//		stretch = false;
+
 	}
 	
 	public void update(){
@@ -67,25 +75,26 @@ public class Player extends Entity {
 	}
 	
 	public void draw(Graphics2D g){
+//		tick++;
 		try {
 			if(direction[0] && direction[2]) //up left
 			{
-				image = ImageIO.read(new File("res/wizkidj.png"));
+				image = ImageIO.read(new File("res/wizkidupleft.png"));
 				dir = 4;
 			}
 			else if(direction[0] && direction[3]) //up right
 			{
-				image = ImageIO.read(new File("res/whizkidjback.png"));
+				image = ImageIO.read(new File("res/wizkidupright.png"));
 				dir = 5;
 			}
 			else if(direction[1] && direction[2]) //down left
 			{
-				image = ImageIO.read(new File("res/whizkidjback.png"));
+				image = ImageIO.read(new File("res/wizkiddownleft.png"));
 				dir = 6;
 			}
-			else if(direction[1] && direction[2]) //down right
+			else if(direction[1] && direction[3]) //down right
 			{
-				image = ImageIO.read(new File("res/whizkidjback.png"));
+				image = ImageIO.read(new File("res/wizkiddownright.png"));
 				dir = 7;
 			}
 			else if(direction[0]) //up
@@ -111,25 +120,45 @@ public class Player extends Entity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(image, pos.getX(), pos.getY(), null);
+//		if (tick % 25 == 0)
+//			stretch = !stretch;
+//			
+////		g.drawImage(image, pos.getX(), pos.getY(), null);
+//		if(stretch)
+//		{
+//			AffineTransform save = g.getTransform();
+//			AffineTransform scale = new AffineTransform();
+//			g.setTransform(scale);
+//			g.scale(1.05, 1.05);
+//			g.translate(-(pos.getX() * .05), -(pos.getY() * .05));
+//			g.drawImage(image, pos.getX(), pos.getY(), null);
+//			g.setTransform(save);
+//		}
+//		else
+//		{
+			g.drawImage(image, pos.getX(), pos.getY(), null);
+//		}
 		
 		for(int i = 0; i < direction.length; i++)
 			direction[i] = false;
 	}
 
-	public boolean hasMana() {if(mana != 0) return true; else return false;}
-	public int getDirection() {return dir;}
+	public boolean hasMana() {if(mana > 0) return true; else return false;}
 	public void setUp(boolean b) {up = b;}
 	public void setDown(boolean b) {down = b;}
 	public void setLeft(boolean b) {left = b;}
 	public void setRight(boolean b) {right = b;}
 	public void setMouseX(int x) {mouseX = x;}
 	public void setMouseY(int y) {mouseY = y;}
+	public void decMana(int x) {mana-= x;}
+	public void decHealth(double x) {health -= x;};
 	public int getX() {return pos.getX();}
 	public int getY() {return pos.getY();}
 	public int getDamage() {return 0;}
-	public int getHealth() {return 0;}
+	public double getHealth() {return health;}
 	public int getSpeed() {return speed;}
+	public int getMana() {return mana;}
+	public int getDirection() {return dir;}
 	public Rectangle getBounds(){return new Rectangle(pos.getX(), pos.getY(), 
 			pos.getX() + image.getWidth(), pos.getY() + image.getHeight());}
 	public int getMouseX() {return mouseX;}

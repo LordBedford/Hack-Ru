@@ -10,12 +10,15 @@ public abstract class Entity {
 	private int speed;
 	private int posx;
 	private int posy;
+	private int width, height;
 	public Entity (int h,int s,int x,int y)
 	{
 		 health = h;
 		 speed = s;
 		 posx = x;
 		 posy = y;
+		 width = 100;
+		 height = 100;
 	}
 	public	int getX()
 	{
@@ -25,7 +28,7 @@ public abstract class Entity {
 	{
 		return posy;
 	}
-	public int getHealth()
+	public double getHealth()
 	{
 		return health;
 	}
@@ -33,9 +36,7 @@ public abstract class Entity {
 	{
 		return speed;
 	}
-	public 	Rectangle getBounds() {
-		return null;
-	}
+	public abstract Rectangle getBounds();
 		
 	public void update()
 	{
