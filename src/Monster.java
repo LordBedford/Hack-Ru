@@ -10,13 +10,15 @@ public class Monster extends Entity
 {
 	//Monster instance variables
 	private double health;
-	private int speed;
+	private double speed;
 	private int damage;
-	private int posx;
-	private int posy;
+	private double posx;
+	private double posy;
 	private int width, height;
+	private boolean frozen;
+	private int count; //time frozen
 	
-	public Monster (int h,int s,int d, int x, int y)//Creates basic monster object
+	public Monster (int h, double s,int d, int x, int y)//Creates basic monster object
 	{
 		super(h, s, x, y);
 		health = h;
@@ -24,14 +26,21 @@ public class Monster extends Entity
 		damage = d;
 		posx = x;
 		posy = y;
+		frozen = false;
+		count = 0;
 	}
 	public double getHealth()//returns monster's current health
 	{
 		return health;
 	}
-	public int getSpeed()//returns monster's current speed
+	public double getSpeed()//returns monster's current speed
 	{
 		return speed;
+	}
+	public void setSpeed(double s)
+	{
+		speed = s;
+		frozen = true;
 	}
 	public int getDamage()//returns monster's current damage
 	{
@@ -42,8 +51,16 @@ public class Monster extends Entity
 	
 	public void update()
 	{
-		int playerposy = Driver.player.getY() - 50;
-		int playerposx = Driver.player.getX() - 10;
+		if(frozen)
+			count++;
+		if(count % 120 == 0)
+		{
+			frozen = false;
+			count = 0;
+			speed = 2;
+		}
+		double playerposy = Driver.player.getY() - 50;
+		double playerposx = Driver.player.getX() - 10;
 		if(Driver.player.getY() != posy && Driver.player.getX() != posx)
 		{
 			double tempspeed = speed/2;
@@ -59,14 +76,6 @@ public class Monster extends Entity
 			else if(playerposx < posx)
 			{
 				posx -= (int)tempspeed;
-//			}
-//		double distancex = Math.abs(playerposx - posx);
-//		double distancey = Math.abs(playerposy - posy);
-//		double distancetot = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
-//		posx =(int) (distancex / distancetot);
-//		posy = (int)(distancey / distancetot);
-		
-
 		}
 			else
 			{
@@ -95,11 +104,11 @@ public class Monster extends Entity
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(image, posx, posy, null);
+		g.drawImage(image, (int)posx, (int)posy, null);
 	}
 	public Rectangle getBounds()
 	{
-		return new Rectangle(posx, posy, 80, 80);
+		return new Rectangle((int)posx, (int)posy, 80, 80);
 	}
 	public boolean takeDamage(int damage)
 	{

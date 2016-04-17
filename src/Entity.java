@@ -7,11 +7,11 @@ import java.awt.Rectangle;
  */
 public abstract class Entity {
 	private int health;
-	private int speed;
-	private int posx;
-	private int posy;
+	private double speed;
+	private double posx;
+	private double posy;
 	private int width, height;
-	public Entity (int h,int s,int x,int y)
+	public Entity (int h, double s,int x,int y)
 	{
 		 health = h;
 		 speed = s;
@@ -20,11 +20,11 @@ public abstract class Entity {
 		 width = 100;
 		 height = 100;
 	}
-	public	int getX()
+	public	double getX()
 	{
 		return posx;
 	}
-	public int getY()
+	public double getY()
 	{
 		return posy;
 	}
@@ -32,10 +32,12 @@ public abstract class Entity {
 	{
 		return health;
 	}
-	public int getSpeed()
+	public double getSpeed()
 	{
 		return speed;
 	}
+	
+	public abstract void setSpeed(double x);
 	public abstract Rectangle getBounds();
 		
 	public void update()

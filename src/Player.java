@@ -11,8 +11,8 @@ public class Player extends Entity {
 	
 	private Location pos; //position
 	private boolean up, down, left, right;
-	private int speed;
-	private int dx, dy;
+	private double speed;
+	private double dx, dy;
 	private BufferedImage image;
 	private double health;
 	private int mana;
@@ -136,7 +136,7 @@ public class Player extends Entity {
 //		}
 //		else
 //		{
-			g.drawImage(image, pos.getX(), pos.getY(), null);
+			g.drawImage(image, (int)pos.getX(), (int)pos.getY(), null);
 //		}
 		
 		for(int i = 0; i < direction.length; i++)
@@ -152,17 +152,23 @@ public class Player extends Entity {
 	public void setMouseY(int y) {mouseY = y;}
 	public void decMana(int x) {mana-= x;}
 	public void decHealth(double x) {health -= x;};
-	public int getX() {return pos.getX();}
-	public int getY() {return pos.getY();}
+	public double getX() {return pos.getX();}
+	public double getY() {return pos.getY();}
 	public int getDamage() {return 0;}
 	public double getHealth() {return health;}
-	public int getSpeed() {return speed;}
+	public double getSpeed() {return speed;}
 	public int getMana() {return mana;}
 	public int getDirection() {return dir;}
-	public Rectangle getBounds(){return new Rectangle(pos.getX(), pos.getY(), 
-			pos.getX() + image.getWidth(), pos.getY() + image.getHeight());}
+	public Rectangle getBounds(){return new Rectangle((int)pos.getX(), (int)pos.getY(), 
+			(int)pos.getX() + image.getWidth() - 10, (int)pos.getY() + image.getHeight() - 10);}
 	public int getMouseX() {return mouseX;}
 	public int getMouseY() {return mouseY;}
+
+	@Override
+	public void setSpeed(double x) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

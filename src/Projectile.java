@@ -9,12 +9,12 @@ import javax.imageio.ImageIO;
 public abstract class Projectile {
 	
 	protected Location pos;
-	protected int speed;
-	protected int dx, dy;
+	protected double speed;
+	protected double dx, dy;
 	protected BufferedImage image;
 	protected int width, height;
 	protected int damage;
-	public Projectile(int direction, int x, int y, int damagen)
+	public Projectile(int direction, double x, double y, int damagen)
 	{
 		speed = 10;
 		damage = damagen;
@@ -52,12 +52,12 @@ public abstract class Projectile {
 	
 	public abstract void draw(Graphics2D g);
 	
-	public int getX() {return pos.getX();}
-	public int getY() {return pos.getY();}
+	public double getX() {return pos.getX();}
+	public double getY() {return pos.getY();}
 	public int getWidth() {return this.width;}
 	public int getHeight() {return this.height;}
 	public int getDamage(){return this.damage;}
-	public Rectangle getBounds() {return new Rectangle(pos.getX(), pos.getY(), width, height);}
+	public Rectangle getBounds() {return new Rectangle((int)pos.getX(), (int)pos.getY(), width, height);}
 
 }
 

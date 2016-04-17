@@ -111,10 +111,15 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 						break loop;
 					if(magic.get(i).getBounds().intersects(creatures.get(j).getBounds()))
 					{
+						if(magic.get(i).getDamage() == 1)
+							creatures.get(i).setSpeed(.2);
+						else
+						{
+							creatures.remove(j);
+							count++;
+						}
 						magic.remove(i);
-						creatures.remove(j);
 						j--;
-						count++;
 					}
 				}
 				i -= count;
@@ -134,7 +139,6 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 			if(!magic.isEmpty())
 				for(int i = 0; i < magic.size(); i++)
 					magic.get(i).update();
-			//checks to see if projectiles are within monster hitbox
 			
 			//delete projectile out of frame
 			for(int i = 0; i < magic.size(); i++)
@@ -220,8 +224,16 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener, 
 		if(keyCode == KeyEvent.VK_J){
 			if(player.hasMana())
 			{
-				magic.add(new FireBall(player.getDirection(), player.getX(), player.getY(),0));
+				magic.add(new FireBall(player.getDirection(), (int)player.getX(), (int)player.getY()));
 				player.decMana(1);
+				mBar.setMana(player.getMana());
+			}
+		}
+		if(keyCode == KeyEvent.VK_K){
+			if(player.hasMana())
+			{
+				magic.add(new FrostSpike(player.getDirection(),(int) player.getX(), (int)player.getY()));
+				player.decMana(2);
 				mBar.setMana(player.getMana());
 			}
 		}
