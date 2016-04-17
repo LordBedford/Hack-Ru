@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,12 +17,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Driver extends JPanel implements KeyListener, MouseMotionListener
+public class Driver extends JPanel implements KeyListener, MouseMotionListener, MouseListener
 {
 
 	private int mouseX, mouseY;
 	private final int width = 1080, height = 810;
 	public static Player player;
+	private NormalWeapon normWeapon;
 	private Monster monster;
 	private ArrayList<Entity> creatures;
 	private ArrayList<Projectile> magic;
@@ -54,6 +56,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener
 		creatures = new ArrayList<Entity>();
 		creatures.add(player = new Player(100,4,0,0));
 		creatures.add(monster = new Monster (100,2,0,0,0));
+		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 		magic = new ArrayList<Projectile>();
 	}
 	//update
@@ -62,6 +65,7 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener
 		if(monsterSpawnCounter == monsterSpawnRate)
 		{
 			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
+			creatures.add(new Monster(100,2,0,spawnpos,0));
 			int side = (int)(Math.random() * 4);
 			if(side == 0)
 				creatures.add(new Monster(100,2,0,spawnpos,0));
@@ -175,4 +179,34 @@ public class Driver extends JPanel implements KeyListener, MouseMotionListener
 		player.setMouseX(e.getX());
 		player.setMouseY(e.getY());
 	}
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) 
+	{
+		int mouseCode = e.getButton();
+		if(mouseCode == MouseEvent.BUTTON1)
+		{
+			normWeapon.attack();
+		}
+	}
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		
+	}
+	
 }

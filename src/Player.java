@@ -1,6 +1,5 @@
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +15,12 @@ public class Player extends Entity {
 	private BufferedImage image;
 	private int mana;
 	private int mouseX, mouseY;
+	/**
+	 * 0 = up<br>
+	 * 1 = down<br>
+	 * 2 = left<br>
+	 * 3 = right<br>
+	 */
 	private boolean[] direction;
 	private int dir; //direction in int numerals for getDirection method
 	
@@ -127,5 +132,8 @@ public class Player extends Entity {
 	public int getSpeed() {return speed;}
 	public Rectangle getBounds(){return new Rectangle(pos.getX(), pos.getY(), 
 			pos.getX() + image.getWidth(), pos.getY() + image.getHeight());}
+	public int getMouseX() {return mouseX;}
+	public int getMouseY() {return mouseY;}
+	
 
 }

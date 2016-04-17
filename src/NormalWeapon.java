@@ -13,8 +13,14 @@ public class NormalWeapon
 		this.range = range;
 	}
 	
-	
-	
+	public void attack()
+	{
+		double angle = Math.atan2((double)(Driver.player.getY() - Driver.player.getMouseY()), (double)(Driver.player.getX() - Driver.player.getMouseX()));
+		if(name.equals("Sword"))
+		{
+			
+		}
+	}
 	
 	public String getName()
 	{
