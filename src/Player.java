@@ -16,6 +16,12 @@ public class Player extends Entity {
 	private BufferedImage image;
 	private int mana;
 	private int mouseX, mouseY;
+	/**
+	 * 0 = up<br>
+	 * 1 = down<br>
+	 * 2 = left<br>
+	 * 3 = right<br>
+	 */
 	private boolean[] direction;
 	
 	
@@ -100,5 +106,8 @@ public class Player extends Entity {
 	public int getSpeed() {return speed;}
 	public Rectangle getBounds(){return new Rectangle(pos.getX(), pos.getY(), 
 			pos.getX() + image.getWidth(), pos.getY() + image.getHeight());}
+	public int getMouseX() {return mouseX;}
+	public int getMouseY() {return mouseY;}
+	
 
 }

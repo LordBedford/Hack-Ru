@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,11 +17,12 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class driver extends JPanel implements KeyListener, MouseMotionListener
+public class driver extends JPanel implements KeyListener, MouseMotionListener, MouseListener
 {
 
 	private int mouseX, mouseY;
 	public static Player player;
+	private NormalWeapon normWeapon;
 	private Monster monster;
 	private ArrayList<Entity> creatures = new ArrayList();
 	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
@@ -51,6 +53,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		addMouseMotionListener(this);
 		creatures.add(player = new Player(100,4,0,0));
 		creatures.add(monster = new Monster (100,2,0,0,0));
+		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
 	}
 	//update
 	public void tick ()
@@ -60,7 +63,6 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
 			int side = (int)Math.random() * 4;
 			int xy =0;
-			System.out.println("Spawn");
 			creatures.add(new Monster(100,2,0,spawnpos,0));
 			monsterSpawnCounter = 0;
 		}
@@ -138,4 +140,34 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		player.setMouseX(e.getX());
 		player.setMouseY(e.getY());
 	}
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) 
+	{
+		int mouseCode = e.getButton();
+		if(mouseCode == MouseEvent.BUTTON1)
+		{
+			normWeapon.attack();
+		}
+	}
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		
+	}
+	
 }
