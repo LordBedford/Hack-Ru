@@ -22,8 +22,14 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 	private int mouseX, mouseY;
 	public static Player player;
 	private Monster monster;
+<<<<<<< HEAD
 	private ArrayList<Entity> creatures = new ArrayList();
 	private int monsterSpawnRate = 60;//Spawns monsters every x ticks
+=======
+	private ArrayList<Entity> creatures;
+	private ArrayList<Projectile> magic;
+	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
+>>>>>>> 6ca60ff0c3414af8c00a1248912cfc13832fc564
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 
 	public static void main(String[] args) 
@@ -49,8 +55,10 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		requestFocus();
 		addKeyListener(this);
 		addMouseMotionListener(this);
+		creatures = new ArrayList<Entity>();
 		creatures.add(player = new Player(100,4,0,0));
 		creatures.add(monster = new Monster (100,2,0,0,0));
+		magic = new ArrayList<Projectile>();
 	}
 	//update
 	public void tick ()
@@ -75,6 +83,9 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		{
 			creatures.get(i).update();
 		}
+		if(player.hasMana() && !magic.isEmpty())
+			for(int i = 0; i < magic.size(); i++)
+				magic.get(i).update();
 	}
 	
 	//render
@@ -86,7 +97,6 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
-			monster.draw((Graphics2D)g);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,6 +105,11 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		for(int i = 0; i < creatures.size();i++)
 		{
 			creatures.get(i).draw((Graphics2D)g);
+		}
+		if(player.hasMana() && !magic.isEmpty())
+		{
+			for(int i = 0; i < magic.size(); i++)
+				magic.get(i).draw((Graphics2D)g);
 		}
 	}
 	@Override
@@ -115,6 +130,9 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener
 		}
 		if(keyCode == KeyEvent.VK_D){
 			player.setRight(true);
+		}
+		if(keyCode == KeyEvent.VK_J){
+			magic.add(new Projectile(player.getDirection(), player.getX(), player.getY()));
 		}
 	}
 	@Override
