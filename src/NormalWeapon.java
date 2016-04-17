@@ -15,7 +15,7 @@ public class NormalWeapon
 	
 	public void attack()
 	{
-		double angle = Math.atan2((double)(driver.player.getY() - driver.player.getMouseY()), (double)(driver.player.getX() - driver.player.getMouseX()));
+		double angle = Math.atan2((double)(Driver.player.getY() - Driver.player.getMouseY()), (double)(Driver.player.getX() - Driver.player.getMouseX()));
 		if(name.equals("Sword"))
 		{
 			

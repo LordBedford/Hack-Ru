@@ -1,6 +1,5 @@
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +22,7 @@ public class Player extends Entity {
 	 * 3 = right<br>
 	 */
 	private boolean[] direction;
+	private int dir; //direction in int numerals for getDirection method
 	
 	
 	public Player(int h, int s, int x, int y)
@@ -34,6 +34,8 @@ public class Player extends Entity {
 		speed = s;
 		direction = new boolean[4];
 		direction[1] = true;
+		dir = 2;
+		mana = 10;
 	}
 	
 	public void update(){
@@ -66,22 +68,46 @@ public class Player extends Entity {
 	
 	public void draw(Graphics2D g){
 		try {
-			if(direction[0] && direction[2])
+			if(direction[0] && direction[2]) //up left
+			{
 				image = ImageIO.read(new File("res/wizkidj.png"));
-			else if(direction[0] && direction[3])
+				dir = 4;
+			}
+			else if(direction[0] && direction[3]) //up right
+			{
 				image = ImageIO.read(new File("res/whizkidjback.png"));
-			else if(direction[1] && direction[2])
+				dir = 5;
+			}
+			else if(direction[1] && direction[2]) //down left
+			{
 				image = ImageIO.read(new File("res/whizkidjback.png"));
-			else if(direction[1] && direction[2])
+				dir = 6;
+			}
+			else if(direction[1] && direction[2]) //down right
+			{
 				image = ImageIO.read(new File("res/whizkidjback.png"));
-			else if(direction[0])
+				dir = 7;
+			}
+			else if(direction[0]) //up
+			{
 				image = ImageIO.read(new File("res/whizkidjback.png"));
-			else if(direction[1])
+				dir = 0;
+			}
+			else if(direction[1]) //down
+			{
 				image = ImageIO.read(new File("res/wizkidj.png"));
-			else if(direction[2])
+				dir = 1;
+			}
+			else if(direction[2]) //left
+			{
 				image = ImageIO.read(new File("res/whizkidsideleft.png"));
-			else if(direction[3])
+				dir = 2;
+			}
+			else if(direction[3]) //right
+			{
 				image = ImageIO.read(new File("res/whizkidsideright.png"));
+				dir = 3;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -89,10 +115,10 @@ public class Player extends Entity {
 		
 		for(int i = 0; i < direction.length; i++)
 			direction[i] = false;
-		
-
 	}
 
+	public boolean hasMana() {if(mana != 0) return true; else return false;}
+	public int getDirection() {return dir;}
 	public void setUp(boolean b) {up = b;}
 	public void setDown(boolean b) {down = b;}
 	public void setLeft(boolean b) {left = b;}

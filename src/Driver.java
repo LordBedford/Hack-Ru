@@ -17,14 +17,16 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class driver extends JPanel implements KeyListener, MouseMotionListener, MouseListener
+public class Driver extends JPanel implements KeyListener, MouseMotionListener, MouseListener
 {
 
 	private int mouseX, mouseY;
+	private final int width = 1080, height = 810;
 	public static Player player;
 	private NormalWeapon normWeapon;
 	private Monster monster;
-	private ArrayList<Entity> creatures = new ArrayList();
+	private ArrayList<Entity> creatures;
+	private ArrayList<Projectile> magic;
 	private int monsterSpawnRate = 600;//Spawns monsters every x ticks
 	private int monsterSpawnCounter = 0;//Counts ticks till monster spawn
 
@@ -32,7 +34,7 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener, 
 	{
 		JFrame frame = new JFrame ("Game thing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		driver panel = new driver();
+		Driver panel = new Driver();
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setResizable(false);
@@ -44,16 +46,18 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener, 
 		 
 		
 	}
-	public driver ()
+	public Driver ()
 	{
-		this.setPreferredSize(new Dimension(1080,810));
+		this.setPreferredSize(new Dimension(width, height));
 		setFocusable(true);
 		requestFocus();
 		addKeyListener(this);
 		addMouseMotionListener(this);
+		creatures = new ArrayList<Entity>();
 		creatures.add(player = new Player(100,4,0,0));
 		creatures.add(monster = new Monster (100,2,0,0,0));
 		normWeapon = new NormalWeapon("Sword", 5, 10, 32);
+		magic = new ArrayList<Projectile>();
 	}
 	//update
 	public void tick ()
@@ -61,9 +65,16 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener, 
 		if(monsterSpawnCounter == monsterSpawnRate)
 		{
 			int spawnpos = (int) (Math.random() * 1080);//Monster random spawning
-			int side = (int)Math.random() * 4;
-			int xy =0;
 			creatures.add(new Monster(100,2,0,spawnpos,0));
+			int side = (int)(Math.random() * 4);
+			if(side == 0)
+				creatures.add(new Monster(100,2,0,spawnpos,0));
+			else if(side == 1)
+				creatures.add(new Monster(100,2,0,0,spawnpos));
+			else if(side == 2)
+				creatures.add(new Monster(100,2,0,1080,spawnpos));
+			else
+				creatures.add(new Monster(100,2,0,spawnpos,810));
 			monsterSpawnCounter = 0;
 		}
 		else
@@ -71,6 +82,18 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener, 
 		for(int i = 0; i < creatures.size();i++)//updates all entities in the array.
 		{
 			creatures.get(i).update();
+		}
+		
+		//update projectile
+		if(player.hasMana() && !magic.isEmpty())
+			for(int i = 0; i < magic.size(); i++)
+				magic.get(i).update();
+		//delete projectile out of frame
+		for(int i = 0; i < magic.size(); i++)
+		{
+			if(magic.get(i).getX() > this.width || magic.get(i).getX() + magic.get(i).getWidth() < 0 
+					|| magic.get(i).getY() > this.height || magic.get(i).getY() + magic.get(i).getHeight() < 0)
+					magic.remove(i);
 		}
 	}
 	
@@ -83,15 +106,20 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener, 
 			image = ImageIO.read(new File("res/GroundTile.png"));
 			g.drawString("Mouse Pos: " + mouseX + ", " + mouseY, 500, 30);
 			g.drawString("Player Pos: " + player.getX() + ", " + player.getY(), 500, 40);
-			monster.draw((Graphics2D)g);
+			g.drawString("Projectile: " + magic.size(), 500, 50);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		g.drawImage(image, 0, 0,1080,810, null);
+//		g.drawImage(image, 0, 0,1080,810, null);
 		for(int i = 0; i < creatures.size();i++)
 		{
 			creatures.get(i).draw((Graphics2D)g);
+		}
+		if(player.hasMana() && !magic.isEmpty())
+		{
+			for(int i = 0; i < magic.size(); i++)
+				magic.get(i).draw((Graphics2D)g);
 		}
 	}
 	@Override
@@ -112,6 +140,9 @@ public class driver extends JPanel implements KeyListener, MouseMotionListener, 
 		}
 		if(keyCode == KeyEvent.VK_D){
 			player.setRight(true);
+		}
+		if(keyCode == KeyEvent.VK_J){
+			magic.add(new Projectile(player.getDirection(), player.getX(), player.getY()));
 		}
 	}
 	@Override
